@@ -18,8 +18,7 @@ Examples [exist](https://github.com/fern-pl/fnc/tree/main/examples) but are smal
 
 ## For more information, see the following pages:
 
-- [Concepts](concepts.md)
-- [Fnc compiler](fnc.md)
+- [FNC Compiler](fnc.md)
 - [Grammar](grammar.md)
 - [Lexical](lexical.md)
 - [Metaprogramming](metaprogramming.md)
