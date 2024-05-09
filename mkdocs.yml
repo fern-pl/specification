@@ -28,6 +28,9 @@ docs_dir: "specification"
 
 nav:
   - Home: index.md
+  - Grammar: grammar.md  
+  - Metaprogramming: metaprogramming.md
+  - Model: model.md
 # concepts.md  fnc.md  grammar.md  index.md  lexical.md  metaprogramming.md  model.md
 
 
