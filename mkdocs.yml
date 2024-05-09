@@ -21,6 +21,7 @@ repo_url: https://github.com/fern-pl/specification.git
 repo_name: fern-pl/specification
 # Enables page modification
 edit_uri: edit/main/specification
+docs_dir: "specification"
 
 
 ### Site layout
