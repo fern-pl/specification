@@ -26,8 +26,8 @@ edit_uri: edit/main/specification
 ### Site layout
 
 nav:
-  - Home: *.md
-
+  - Home: index.md
+# concepts.md  fnc.md  grammar.md  index.md  lexical.md  metaprogramming.md  model.md
 
 
 ### Theme customization
