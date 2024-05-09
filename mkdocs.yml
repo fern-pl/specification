@@ -16,7 +16,7 @@ copyright: Copyright &copy; Fern Developers - 2024
 ## Git
 
 # Git repository
-repo_url: https://github.com/fern-pl/specification.git
+repo_url: https://github.com/fern-pl/specification
 # Name of the repository
 repo_name: fern-pl/specification
 # Enables page modification
