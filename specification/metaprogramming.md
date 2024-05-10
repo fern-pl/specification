@@ -1,26 +1,27 @@
-I# Metaprogramming
-
-## Member Evaluations
+# Metaprogramming
 
 > Locals are commonly referred to as variables, which in Fern are specifically variables that are local to a function (ie: not a field or parameter variable. )
 
-| Member | Evaluates | Applicable |
-|--------|-----------|------------|
-| `attributes` | All attributes of the given symbol. | All |
-| `children` | Children of the given symbol. | All |
-| `parents` | Parents of the given symbol. | All |
-| `identifier` | The full identifier of the given symbol, including parents. | All |
-| `symattr` | The symbol attributes of the given symbol has, this is ***not*** the same as `attributes`. | All |
-| `inherits` | Initial value of the given symbol's data. | Types |
-| `sizeof` | The size of the given symbol's data. | Variables, Types, Functions |
-| `alignof` | The alignment of the given symbol's data. | Variables, Types, Functions |
-| `typeof` | The type of the given symbol's data. | Variables, Types |
-| `init` | Initial value of the given symbol's data. | Variables, Types |
-| `offsetof` | The offset of the given symbol's data. | Variables |
-| `returnof` | Return type of the given symbol. | Functions |
-| `parameters` | Parameters of the given symbol. | Functions |
-| `locals` | Locals of the given symbol. | Functions |
-| `children` | Imported symbols of the given symbol. | Module |
+All symbol structure members may be accessed from any symbol using the `->` operator, to see such structures view the section on symbol formats!
+
+`rt.symbol` may be used to access internal symbol structures, but not to directly access full symbol structures at once.
+
+```
+auto foo = 1;
+string bar = "abc";
+
+void main()
+{
+    writeln(foo->size); // 4
+    writeln(foo->type->identifier); // int
+    writeln(foo->type->name); // int
+
+    writeln(foo->size == bar->size); // false
+    writeln(bar.length); // 3
+    writeln(bar->type == string); // true
+    writeln(bar->glob == foo->glob); // true
+}
+```
 
 ## Symbol Attributes & Formats
 
@@ -44,17 +45,20 @@ I# Metaprogramming
 | `expression` | Code which may not function without an existing statement to modify, like `1 + 1` |
 | `literal` | Value known to the compiler before execution. |
 | `glob` | The global scope of the entire program, containing all of its symbols. |
+| `alias` | A symbol pointing to another symbol. |
 
 This is implementation defined, but generally symbols have or store the same information as the following formats internally:
 
 ```
 Symbol [ 
     Glob glob;
-    SymAttr attr;
+    SymAttr symattr;
     string name;
     Symbol[] parents;
     Symbol[] children;
     Symbol[] attributes;
+
+    string identifier;
 ]
 ```
 
@@ -63,35 +67,51 @@ Type : Symbol [
     Type[] inherits;
     Variable[] fields;
     Function[] functions;
-    ubyte[] init;
-    size_t sizeof;
-    size_t alignof;
+    ubyte[] data;
+    size_t size;
+    size_t align;
     // For pointer and arrays, how deeply nested they are.
-    // This is not front-facing to the runtime.
     uint depth;
+
+    string type;
 ]
 ```
 
 ```
 # This is also used for delegates, lambdas, ctors, dtors, and unittests.
 Function : Symbol [
-    // The first parameter is always the return.
     Variable[] parameters;
     // This will include the return and parameters as the first locals.
     Variable[string] locals;
-    Instruction[] instructions;
-    size_t alignof;
+    size_t align;
+
+    Symbol return;
+    string type;
 ]
 ```
 
 ```
 # This is also used for locals, parameters, expressions, and literals.
 Variable : Symbol [
-    ubyte[] init;
-    size_t sizeof;
-    size_t alignof;
-    size_t offsetof;
-    Marker marker;
+    ubyte[] data;
+    size_t size;
+    size_t align;
+    size_t offset;
+
+    Symbol type;
+]
+```
+
+```
+Alias : Symbol [
+    union
+    {
+        Symbol single;
+        Symbol[] many;
+    }
+
+    // Always "alias"
+    string type;
 ]
 ```
 
@@ -112,6 +132,7 @@ Glob : Symbol [
     Type[string] types;
     Field[string] fields;
     Function[string] functions;
+    Alias[string] aliases;
     Function[] unittests;
 ]
 ```

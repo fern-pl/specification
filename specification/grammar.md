@@ -86,6 +86,7 @@ Operators are a builtin part of the language used to perform certain operations.
 | `*` `&` | Unary pointer dereference and reference. |
 | `x ? y : z` | Ternary operator, if `x` evaluates to `true`, the output will be `y`, otherwise it will be `z` |
 | `x..y` | Iota operator, creates a range from `x` to `y` not containing the value `y`. |
+| `->` | Symbol member operator, specifically only able to be used on a symbol to access an internal symbol member, which is evaluated at comptime. |
 
 The following operators are defined as op-assign, meaning that they perform the operation followed by an assignment.
 
