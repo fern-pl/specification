@@ -146,6 +146,9 @@ tagged IpAddr
 {
 	ubyte[4] V4;
 	string V6;
+    // This will be the type of the tag, which is uint.
+    // The prime inherit will modify the type of the tag.
+    V819;
 }
 ```
 
@@ -157,7 +160,7 @@ All types may, but not must, contain member declarations, and the above are only
 
 Tagged have a `tag` which indicates what kind of value they hold, but they will only ever hold one of their fields as a value. Tagged may be checked for their `tag` by doing `foo is name` or `foo is type` like in `foo is V4`.
 
-Unlike all other types, tagged may inherit a builtin type as a prime inherit, which will act as the default type for all fields which do not have a type declared.
+Unlike all other types, tagged may inherit a builtin type as a prime inherit, which will act as the default type for all fields and also the type of the `tag`, by default the prime inherit will be assumed to be `uint`.
 
 Tagged may be implicitly created by wrapping multiple types in parenthesis, like `(int, short) foo` and assignment when value is one of `int` and `short`.
 Additionally, tagged may implicitly create from a type by accessing a member, like from `IpAddr.V4` in which the default value of `V4` is selected.
