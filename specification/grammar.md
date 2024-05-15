@@ -129,7 +129,10 @@ Pointers may be represented as `void*`, `nint`, `nuint`, or appending `*` to the
 `[aggregation] name`
 
 Fern declares 3 different kinds of user-defined types.
+
 A type with no members has a minimum size of 1 byte, however it may also not be explicitly used to declare a variable.
+
+Types may be created anonymously, directly inlining their effects by not defining a name, this may not be done using classes as an anonymous nor in a tagged.
 
 An example of struct/class syntax is as follows:
 ```
@@ -137,6 +140,13 @@ struct/class Element
 {
     int kind;
     short value;
+    // Anonymous type, acting as a union.
+    tagged
+    {
+        // These occupy the same memory space, with the size being the maximum size used by any type inside of it.
+        int foo;
+        long bar;
+    }
 }
 ```
 
@@ -166,6 +176,8 @@ Tagged may be implicitly created by wrapping multiple types in parenthesis, like
 Additionally, tagged may implicitly create from a type by accessing a member, like from `IpAddr.V4` in which the default value of `V4` is selected.
 
 If all members of a tagged are `const`, they may have a value assigned by default, `tag` is stripped away (but may still be accessed) and it acts exactly as an `enum` would in languages like D, Java, or C#. Otherwise default assignment is not allowed.
+
+If a tagged is an anonymous type it will not have a `tag`, and will act as a typical union type would.
 
 ```
 tagged A : ^ubyte
