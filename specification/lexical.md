@@ -25,7 +25,7 @@ Escape sequences are sequences of characters which result in a special character
 | `\v` | Vertical tab. |
 | `\xhh..` | Hexadecimal character insert. |
 
-## Literal Suffixes
+## Literals
 
 Literal suffixes are suffixes which may be appended to a literal to change the way that the literal is formatted or interpreted.
 
@@ -37,6 +37,9 @@ Literal suffixes are suffixes which may be appended to a literal to change the w
 | `f` | 32-bit floating point, suffix. |
 | `0x` | Hexadecimal, prefix. |
 | `0X` | Hexadecimal, prefix. |
+| `0b` | Binary, prefix. |
+
+All integer literals may have their values separated by underscores for clarity, in replacement of commas such as in `10_000` where the literal is the value 10 thousand.
 
 ## Comments, Terminators, and Scopes
 
@@ -44,7 +47,30 @@ Literal suffixes are suffixes which may be appended to a literal to change the w
 
 `/* multi-line comment */`
 
+`# hint`
+
 Comments in Fern use the syntax `\\` for single-line and `/*..*/` for multi-line.
+
+Additionally, all implementations must support hinting, but not enforce their effects. Hints are used to give the compiler extra information about your code and aid in optimization or other details.
+
+For example, the following code would hint that `foo` should have its allocation inlined and the loop should unroll regardless of code size:
+
+```
+class A
+{
+    long a;
+}
+
+void main()
+{
+    A foo; #inline
+
+    foreach (i; 0..10_000) #unroll
+        writeln(i);
+}
+```
+
+It is important to note that, unlike the attributes built into the language to hint to the compiler, like `inline`, hinting is not guaranteed by the implementation.
 
 `[type] name;`
 
@@ -116,9 +142,6 @@ Scopes in Fern are started and ended using curly brackets.
 | `foreach` | [Statement](grammar.md#statements)
 | `foreach_reverse` | [Statement](grammar.md#statements)
 | `while` | [Statement](grammar.md#statements)
-| `switch` | [Statement](grammar.md#statements)
-| `case` | [Statement](grammar.md#statements)
-| `default` | [Statement](grammar.md#statements)
 | `goto` | [Statement](grammar.md#statements)
 | `with` | [Statement](grammar.md#statements)
 | `break` | [Statement](grammar.md#statements)
