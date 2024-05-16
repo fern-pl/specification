@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-
 jobs:
   build:
     name: Deploy docs
@@ -11,7 +10,7 @@ jobs:
     steps:
       - name: Checkout master
         uses: actions/checkout@v1
-      - run: cp LICENSE.md specification/LICENSE.md
+      - run: cp LICENSE.md.ignoreme specification/LICENSE.md
       - name: Deploy docs
         uses: mhausenblas/mkdocs-deploy-gh-pages@master
         env:
