@@ -28,7 +28,8 @@ repo_name: fern-pl/specification
 edit_uri: edit/main/specification
 docs_dir: "specification"
 
-
+pages:
+  - LICENSE: LICENSE.txt
 ### Site layout
 
 nav:
