@@ -28,8 +28,7 @@ repo_name: fern-pl/specification
 edit_uri: edit/main/specification
 docs_dir: "specification"
 
-pages:
-  - LICENSE: LICENSE.txt
+
 ### Site layout
 
 nav:
@@ -37,7 +36,7 @@ nav:
   - Grammar: grammar.md  
   - Metaprogramming: metaprogramming.md
   - Model: model.md
-  - Copyright: ../LICENSE.md
+  - Copyright: LICENSE.md
 # concepts.md  fnc.md  grammar.md  index.md  lexical.md  metaprogramming.md  model.md
 
 
