@@ -25,7 +25,7 @@ copyright: |
 # Git repository
 repo_name: fern-pl/specification
 # Enables page modification
-edit_uri: edit/main/specification
+edit_uri: https://github.com/fern-pl/specification/edit/main/specification/
 docs_dir: "specification"
 
 
