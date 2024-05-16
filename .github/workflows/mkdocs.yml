@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checkout master
         uses: actions/checkout@v1
-
+      - run: cp LICENSE.md specification/LICENSE.md
       - name: Deploy docs
         uses: mhausenblas/mkdocs-deploy-gh-pages@master
         env:
