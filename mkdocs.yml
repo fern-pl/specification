@@ -23,22 +23,20 @@ copyright: |
 ## Git
 
 # Git repository
-repo_url: https://github.com/fern-pl/specification
-# Name of the repository
 repo_name: fern-pl/specification
 # Enables page modification
-edit_uri: edit/main/
-docs_dir: "."
+edit_uri: edit/main/specification
+docs_dir: "specification"
 
 
 ### Site layout
 
 nav:
-  - Home: specification/index.md
-  - Grammar: specification/grammar.md  
-  - Metaprogramming: specification/metaprogramming.md
-  - Model: specification/model.md
-  - Copyright: LICENSE.md
+  - Home: index.md
+  - Grammar: grammar.md  
+  - Metaprogramming: metaprogramming.md
+  - Model: model.md
+  - Copyright: ../LICENSE.md
 # concepts.md  fnc.md  grammar.md  index.md  lexical.md  metaprogramming.md  model.md
 
 
