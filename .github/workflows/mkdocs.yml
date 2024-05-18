@@ -11,6 +11,7 @@ jobs:
       - name: Checkout master
         uses: actions/checkout@v1
       - run: cp LICENSE.md.ignoreme specification/LICENSE.md
+      - run: pip install mkdocs-bootstrap386
       - name: Deploy docs
         uses: mhausenblas/mkdocs-deploy-gh-pages@master
         env:
