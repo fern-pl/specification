@@ -42,7 +42,7 @@ nav:
 theme:
   name: windmill-dark
 extra_css:
-  - css/custom.css
+  - "https://raw.githubusercontent.com/fern-pl/specification/main/.github/custom.cs"
 
 
 
