@@ -40,17 +40,7 @@ nav:
 ### Theme customization
 
 theme:
-  name: bootstrap386
-  # Language selection.
-  # For multiple languages, create multiple projects and link them with the language selector
-  language: en
-
-  # Logo as an image
-  #logo: assets/logo.png
-  # logo as an icon
-  # Find 'em here: https://squidfunk.github.io/mkdocs-material/reference/icons-emojis/#search
-  icon:
-    logo: material/rocket
+  - name: 'rtd-dropdown'
 
 
 
