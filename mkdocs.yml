@@ -40,14 +40,7 @@ nav:
 ### Theme customization
 
 theme:
-  # Enable Material theme
-  name: material
-
-  # Font options
-  font: 
-    text: Roboto
-    code: Roboto Mono
-  
+  name: bootstrap386
   # Language selection.
   # For multiple languages, create multiple projects and link them with the language selector
   language: en
@@ -58,93 +51,6 @@ theme:
   # Find 'em here: https://squidfunk.github.io/mkdocs-material/reference/icons-emojis/#search
   icon:
     logo: material/rocket
-
-  # Favicon can be set as an image
-  #favicon:
-
-  ## Color palette
-  palette:
-
-    # Palette toggle for automatic mode
-    - media: "(prefers-color-scheme)"
-      toggle:
-        icon: material/brightness-auto
-        name: Switch to light mode
-
-    # Palette toggle for light mode
-    - media: "(prefers-color-scheme: light)"
-      scheme: default 
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-      #primary:
-      #accent:
-
-    # Palette toggle for dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      toggle:
-        icon: material/brightness-4
-        name: Switch to system preference
-      #primary:
-      #accent:
-  
-  features:
-    ## Site navigation
-
-    # Single Page Application
-    - navigation.instant
-    # Automatic anchor update in URL
-    - navigation.tracking
-    # Tabs in the top menu
-    - navigation.tabs
-    # Breadcrumbs at the top of pages
-    - navigation.path
-    # Option to make overview pages for subfolders
-    # This page must be subfoler/index.md
-    - navigation.indexes
-    # Sidebar following / opening as you read
-    - toc.follow
-    # Back-to-top button
-    - navigation.top
-    # Previous/Next links in footer
-    - navigation.footer
-
-    ## Site search
-
-    # Auto completion
-    - search.suggest
-    # Match highlight
-    - search.highlight
-
-    ## Announcement bars
-
-    # Option to mark the announcement as read
-    - announce.dismiss
-
-    ## Git page info
-    
-    # Button for page edition
-    - content.action.edit
-
-    ## Code
-
-    # Copy code
-    - content.code.copy
-    # Line selection
-    - content.code.select
-    # Add annotations to code
-    - content.code.annotate
-
-    ## Content tabs
-
-    # Linked content tabs
-    - content.tabs.link
-
-    ## Tooltips
-    - content.tooltips  
-
-
 
 
 
