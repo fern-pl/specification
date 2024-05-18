@@ -11,8 +11,8 @@ jobs:
       - name: Checkout master
         uses: actions/checkout@v1
       - run: cp LICENSE.md.ignoreme specification/LICENSE.md
-      - run: pip install mkdocs-rtd-dropdown
       - name: Deploy docs
         uses: mhausenblas/mkdocs-deploy-gh-pages@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REQUIREMENTS: .github/requirements.txt
