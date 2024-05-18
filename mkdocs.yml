@@ -40,7 +40,9 @@ nav:
 ### Theme customization
 
 theme:
-  name: terminal
+  name: windmill-dark
+extra_css:
+  - css/custom.css
 
 
 

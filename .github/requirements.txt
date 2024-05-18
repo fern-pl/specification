@@ -1,1 +1,1 @@
-mkdocs-terminal
+mkdocs-windmill-dark
