@@ -47,30 +47,7 @@ All integer literals may have their values separated by underscores for clarity,
 
 `/* multi-line comment */`
 
-`# hint`
-
 Comments in Fern use the syntax `\\` for single-line and `/*..*/` for multi-line.
-
-Additionally, all implementations must support hinting, but not enforce their effects. Hints are used to give the compiler extra information about your code and aid in optimization or other details.
-
-For example, the following code would hint that `foo` should have its allocation inlined and the loop should unroll regardless of code size:
-
-```
-class A
-{
-    long a;
-}
-
-void main()
-{
-    A foo; #inline
-
-    foreach (i; 0..10_000) #unroll
-        writeln(i);
-}
-```
-
-It is important to note that, unlike the attributes built into the language to hint to the compiler, like `inline`, hinting is not guaranteed by the implementation.
 
 `[type] name;`
 
@@ -126,7 +103,6 @@ Scopes in Fern are started and ended using curly brackets.
 | `ref` | [Attribute](grammar.md#attributes)
 | `align` | [Attribute](grammar.md#attributes)
 | `offset` | [Attribute](grammar.md#attributes)
-| `transient` | [Attribute](grammar.md#attributes)
 | `atomic` | [Attribute](grammar.md#attributes)
 | `alias` | [Alias](grammar.md#symbols-and-aliases)
 | `module` | [Type](grammar.md#module)

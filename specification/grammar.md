@@ -482,37 +482,26 @@ Functions have their attributes ***after*** their signature, having attributes p
 | `trusted` | Ignores all safety checks usually applied to functions but may be called from a safe function, manual review. | Function |
 | `safe` | A safe function with all safety checks, may call `trusted` and `safe`. | Function |
 | `@tapped` | Ignores all attributes that may be inferred or applied to the parent scope(s). | Function |
-| `inline` | Guarantees that a function is inlined by the compiler or an error is thrown. | Function |
+| `inline` | Guarantees that a function is inlined by the compiler or an error is thrown, variables with this will have their allocation inlined. | Functions, Variables |
 | `const` | Immutable, including by any direct references, does not indicate read-only memory. | Variables, Types |
 | `auto` | Infers type at comptime, similar to type aliasing but implicit. | Variables |
 | `ref` | Carries a reference to data. | Parameters, Return Values |
 | `mustuse` | Must be used or cast to `void` or an error is thrown. | Return Values |
 | `static` | Data is stored globally rather than by-instance. | Variables |
-| `align(n)` | Aligns data to the given boundary `n` which must be a power of 2 and supplied. | Fields |
-| `offset(n)` | Sets the offset of a field to a specific byte in its parent type, this may change the size of the type and can be used to create unions, `n` must be supplied. | Fields |
-| `transient` | Prevents cache pollution by declaring a variable as non-temporal data. | Variables |
 | `atomic` | Makes data thread-safe through use of atomics. | Variables |
+| `@heap` | Allocate data on the heap, will result in voidability. | Types, Variables |
+| `@stack` | Allocate data on the stack. | Types, Variables |
+| `@scalar` | Allocate data in scalar registers. | Types, Variables |
+| `@floating` | Allocate data in float registers. | Types, Variables |
+| `@xmmword` | Allocate data in 128-bit vector registers. | Types, Variables |
+| `@ymmword` | Allocate data in 256-bit vector registers. | Types, Variables |
+| `@zmmword` | Allocate data in 512-bit vector registers. | Types, Variables |
+| `@align(n)` | Aligns data to the given boundary `n` which must be a power of 2 and supplied. | Variables, Types |
+| `@offset(n)` | Sets the offset of a field to a specific byte in its parent type, this may change the size of the type and can be used to create unions, `n` must be supplied. | Fields |
+| `@transient` | Prevents cache pollution by declaring a variable as non-temporal data. | Variables, Types |
+| `@unroll` | Hints to the compiler to unroll a loop. | Statements |
 
 Abstract functions must have their signature end in a semicolon without declaring a body.
-
-### `kind:x`
-
-`[aggregation] name kind:[x]`
-
-User-defined types with the `kind:x` attribute have their allocation strategy chosen by one of the following kinds. This is not guaranteed to be honored by the implementation, but suggests a certain storage type.
-
-| Kind | Definition |
-|------|------------|
-| `heap` | Allocate on the heap. |
-| `stack` | Allocate on the stack. |
-| `scalar` | Store in scalar registers. |
-| `float` | Store in float registers. |
-| `xmmword` | Store in `XMM` or appropriate vectors. |
-| `ymmword` | Store in `YMM` or appropriate vectors. |
-| `zmmword` | Store in `ZMM` or appropriate vectors. |
-| `default` | Implementation defined. |
-
-Types with the `kind:heap` attribute are `voidable` by default and must be constructed to create an instance.
 
 ### `voidable`
 
@@ -593,11 +582,10 @@ Statements are declarations which have special executive functionality, Fern def
 | `foreach` | Iterates the next line or scope over a range of values, this may be a data range or integral range by use of `L..U` where `L` is the lower bound and `U` is the upper bound |
 | `foreach_reverse` | Identical to `foreach` but operates in reverse. |
 | `while` | Iterates the next line or scope while a condition is true. |
-| `switch` | Selects a `case` based on the value provided to the switch. Should evaluate to a jump-table after compilation. |
-| `case` | Conditionally executes the next line or scope based on the value of a `switch` statement. This is declared as `case value:`. |
-| `default` | A default case for `switch` statements which executes if no other cases execute. This is declared as `default:`. |
 | `goto` | Jumps to a `label` within code, this is declared as `goto name` |
 | `label` | Labels a part of code to be jumped to by a `goto` statement, this is declared as `name:`. |
 | `with` | Used to declare a scope in which all function calls are first evaluated as members of a variable. |
 | `break` | Exits the current scope. |
 | `continue` | Continues to the next iteration in a loop. |
+
+Statements are not guaranteed to be evaluated at runtime, and may be evaluated at comptime if possible. This behavior may be modified with special compiler attributes.
