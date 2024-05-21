@@ -105,6 +105,9 @@ Almost all operators may be overloaded in types, this is done by specifying the 
 
 | Signature | Overload |
 |-----------|----------|
+| `nnary read(alias F = void)()` | `.` Field or variable reading, optionally takes a field symbol being read, otherwise `this` is being read. |
+| `nnary write(alias F = void)()` | `.` Field or variable writing, optionally takes a field symbol being written, otherwise `this` is being written. |
+| `nnary call(alias F, ARGS...)()` | `.` Function calls, taking the symbol of what function is being called. **Will not overload UFCS calls!** |
 | `nnary \|>(S...)()` | `\|>` Conversion pipe, takes the sequence of symbols being piped through. |
 | `nnary <\|()` | `<\|` Downcast or dereference. |
 | `binary <=>(T)(T val)` | `<` `>` `<=` `>=` Comparison operators, return 0 for greater, 1 for lesser, 2 for greater or equal, or any other value for lesser or equal. |
@@ -130,9 +133,6 @@ Almost all operators may be overloaded in types, this is done by specifying the 
 | `unary -()` | `-` NEG operator. |
 | `unary $()` | `$` Range length operator. |
 | `unary !~()` | `!` `~` NOT operators. |
-| `nnary read(alias F = void)()` | `.` Field or variable reading, optionally takes a field symbol being read, otherwise `this` is being read. |
-| `nnary write(alias F = void)()` | `.` Field or variable writing, optionally takes a field symbol being written, otherwise `this` is being written. |
-| `nnary call(alias F, ARGS...)()` | `.` Function calls, taking the symbol of what function is being called. **Will not overload UFCS calls!** |
 
 All operators with a respective assignment operator may have that assignment operator overloaded by appending `=` before the parameters in the signature, like in `binary >>=(T)(T val)`.
 
