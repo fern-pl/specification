@@ -76,24 +76,64 @@ Operators are a builtin part of the language used to perform certain operations.
 | Operator | Definition |
 |----------|------------|
 | `\|>` | Conversion pipe operator, used to pipe data to a type, member function, or field. |
-| `<\|` | Downcast operator, downcasts data to its superior type. |
+| `<\|` | Downcast operator, downcasts data to its superior type or dereference. |
 | `>` `<` `<=` `>=` | Comparison operators, special behavior is defined for array types, which return a mask of where the comparison returned true. |
-| `+` `-` `*` `/` `%` `^^` `<<` `>>` `<<<` `^` `&` `\|` `~` `in` | Binary operators. `in` is used for checking if an associative array contains an element, and `~` is used for array concatenation by default. |
 | `==` `!=` `&&` `\|\|`, `!` | Equality and logical operators, with `!` and `!=` as NOT operators. |
-| `[..]` | Slicing operator, defined to return a slice of elements from a range by default, using a given lower and or upper bounds or the entire range is returned. |
-| `[x]` | Indexing operator, used for range interfaces by default. |
-| `--` `++` `~` `-` | Unary postdecrement, postincrement, not, and neg operators. Postdecrement and postincrement may appear as preX versions in which they are after a variable. |
-| `*` `&` | Unary pointer dereference and reference. |
-| `x ? y : z` | Ternary operator, if `x` evaluates to `true`, the output will be `y`, otherwise it will be `z` |
+| `[x]` `[..]` `[]` | Slicing and indexing operators, `[x]` will take the element of the given index, `[..]` will take the mask or slice of the given range, and `[]` will get an array as an explicit array type or element-wise array that can have operators performed on it. |
+| `+` `-` `*` `/` `%` `^^` `<<` `>>` `<<<` `^` `&` `\|` `~` | Binary operators. `^^` performs exponentiation and `~` is used for array concatenation. |
+| `--` `++` `~` `-` | Unary postdecrement, postincrement, NOT, and NEG operators. Postdecrement and postincrement may appear as preX versions in which they are after a variable. |
+| `&` | Unary pointer dereference. |
+| `x if y else z` | Ternary alternate operator. |
 | `x..y` | Iota operator, creates a range from `x` to `y` not containing the value `y`. |
-| `->` | Symbol member operator, specifically only able to be used on a symbol to access an internal symbol member, which is evaluated at comptime. |
+| `->` | Symbol member operator, which is evaluated at comptime and may evaluate to an `alias` function operating on a symbol. |
+
+> Unlike other languages you must use the LTR operator `<|` to dereference. All unary operators are technically RTL, but most have been preserved as they don't have too much of an impact on code readability, `*` was singled out due to pointer dereferencing being a common operation and `&` rarely reading RTL in code.
 
 The following operators are defined as op-assign, meaning that they perform the operation followed by an assignment.
 
+> It is highly recommended to use the mask assign operator instead of masking and then assigning when working with masks.
+
 | Operator |
 |----------|
-| `+=` `-=` `*=` `/=` `%=` `^^=` `~=` |
+| `+=` `-=` `*=` `/=` `%=` `^^=` `~=` `[..]=` |
 | `<<=` `>>=` `<<<=` `^=` `&=` `\|=` |
+
+#### Operator Overloading
+
+Almost all operators may be overloaded in types, this is done by specifying the n-nary of the operator followed by the operator, refer to the following list:
+
+> Znary is not a real definition of an n-nary, but is used to explicitly state no operands at all, unlike n-nary which means at least one.
+
+| Signature | Overload |
+|-----------|----------|
+| `unary \|>(T)()` | `\|>` Conversion pipe. |
+| `znary <\|()` | `<\|` Downcast or dereference. |
+| `binary <=>(T)(T val)` | `<` `>` `<=` `>=` Comparison operators, return 0 for greater, 1 for lesser, 2 for greater or equal, or any other value for lesser or equal. |
+| `binary ==(T)(T val)` | `==` `!=` Equality operators. |
+| `unary !~()` | `!` `~` NOT operators. |
+| `binary [](T)(T val)` | `[x]` Index operator. |
+| `binary [..](T)(T val)` | `[..]` Slice mask operator. |
+| `binary *(T)(T val)` | `*` Multiplication operator. |
+| `binary /(T)(T val)` | `/` Division operator. |
+| `binary +(T)(T val)` | `+` Addition operator. |
+| `binary -(T)(T val)` | `-` Subtraction operator. |
+| `binary %(T)(T val)` | `%` Modulus operator. |
+| `binary ^^(T)(T val)` | `^^` Exponentiation operator. |
+| `binary <<(T)(T val)` | `<<` SHL operator. |
+| `binary >>(T)(T val)` | `>>` SHL operator. |
+| `binary <<<(T)(T val)` | `<<<` SHL sign preserved operator. |
+| `binary ^(T)(T val)` | `^` XOR operator. |
+| `binary &(T)(T val)` | `&` AND operator. |
+| `binary \|(T)(T val)` | `\|` OR operator. |
+| `binary ~(T)(T val)` | `~` Array concatentation operator. |
+| `unary --(T)(T val)` | `--` Postdecrement and predecrement operator. |
+| `unary ++(T)(T val)` | `++` Postincrement and preincrement operator. |
+| `unary -(T)(T val)` | `-` NEG operator. |
+| `nnary read(alias F = void)()` | `.` Field or variable reading, optionally takes a field symbol being read, otherwise `this` is being read. |
+| `nnary write(alias F = void)()` | `.` Field or variable writing, optionally takes a field symbol being written, otherwise `this` is being written. |
+| `nnary call(alias F)()` | `.` Function calls, taking the symbol of what function is being called. **Will not overload UFCS calls!** |
+
+All operators with a respective assignment operator may have that assignment operator overloaded by appending `=` before the parameters in the signature, like in `binary >>=(T)(T val)`.
 
 ### Arrays
 
@@ -111,6 +151,10 @@ Static arrays must have their length known at comptime and may be created out of
 Static arrays may not be concatenated through use of `~`, however they still must have their length initialized at first.
 
 > Arrays are cumulative, meaning that you can have arrays of arrays and so on.
+
+#### Masks
+
+Arrays may be masked, this cannot explicitly be accessed as a type by the user, but can be created using slicing operations and converted back to ranges by way of the `[]` operator or assignment/conversion to an array type variable.
 
 ### Pointers
 
