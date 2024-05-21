@@ -80,12 +80,13 @@ Operators are a builtin part of the language used to perform certain operations.
 | `>` `<` `<=` `>=` | Comparison operators, special behavior is defined for array types, which return a mask of where the comparison returned true. |
 | `==` `!=` `&&` `\|\|`, `!` | Equality and logical operators, with `!` and `!=` as NOT operators. |
 | `[x]` `[..]` `[]` | Slicing and indexing operators, `[x]` will take the element of the given index, `[..]` will take the mask or slice of the given range, and `[]` will get an array as an explicit array type or element-wise array that can have operators performed on it. |
-| `+` `-` `*` `/` `%` `^^` `<<` `>>` `<<<` `^` `&` `\|` `~` | Binary operators. `^^` performs exponentiation and `~` is used for array concatenation. |
+| `+` `-` `*` `/` `%` `^^` `<<` `>>` `<<<` `^` `&` `\|` `~` | Binary operators. `^^` performs exponentiation and `~` is used for range concatenation. |
 | `--` `++` `~` `-` | Unary postdecrement, postincrement, NOT, and NEG operators. Postdecrement and postincrement may appear as preX versions in which they are after a variable. |
-| `&` | Unary pointer dereference. |
+| `&` | Unary pointer reference operator. |
 | `x if y else z` | Ternary alternate operator. |
 | `x..y` | Iota operator, creates a range from `x` to `y` not containing the value `y`. |
 | `->` | Symbol member operator, which is evaluated at comptime and may evaluate to an `alias` function operating on a symbol. |
+| `$` | Dollar operator, gets the length of a range, must be overloaded for custom ranges. |
 
 > Unlike other languages you must use the LTR operator `<|` to dereference. All unary operators are technically RTL, but most have been preserved as they don't have too much of an impact on code readability, `*` was singled out due to pointer dereferencing being a common operation and `&` rarely reading RTL in code.
 
@@ -102,12 +103,10 @@ The following operators are defined as op-assign, meaning that they perform the 
 
 Almost all operators may be overloaded in types, this is done by specifying the n-nary of the operator followed by the operator, refer to the following list:
 
-> Znary is not a real definition of an n-nary, but is used to explicitly state no operands at all, unlike n-nary which means at least one.
-
 | Signature | Overload |
 |-----------|----------|
-| `unary \|>(T)()` | `\|>` Conversion pipe. |
-| `znary <\|()` | `<\|` Downcast or dereference. |
+| `nnary \|>(S...)()` | `\|>` Conversion pipe, takes the sequence of symbols being piped through. |
+| `nnary <\|()` | `<\|` Downcast or dereference. |
 | `binary <=>(T)(T val)` | `<` `>` `<=` `>=` Comparison operators, return 0 for greater, 1 for lesser, 2 for greater or equal, or any other value for lesser or equal. |
 | `binary ==(T)(T val)` | `==` `!=` Equality operators. |
 | `unary !~()` | `!` `~` NOT operators. |
@@ -125,10 +124,11 @@ Almost all operators may be overloaded in types, this is done by specifying the 
 | `binary ^(T)(T val)` | `^` XOR operator. |
 | `binary &(T)(T val)` | `&` AND operator. |
 | `binary \|(T)(T val)` | `\|` OR operator. |
-| `binary ~(T)(T val)` | `~` Array concatentation operator. |
-| `unary --(T)(T val)` | `--` Postdecrement and predecrement operator. |
-| `unary ++(T)(T val)` | `++` Postincrement and preincrement operator. |
-| `unary -(T)(T val)` | `-` NEG operator. |
+| `binary ~(T)(T val)` | `~` Range concatentation operator. |
+| `unary --()` | `--` Postdecrement and predecrement operator. |
+| `unary ++()` | `++` Postincrement and preincrement operator. |
+| `unary -()` | `-` NEG operator. |
+| `unary $()` | `$` Range length operator. |
 | `nnary read(alias F = void)()` | `.` Field or variable reading, optionally takes a field symbol being read, otherwise `this` is being read. |
 | `nnary write(alias F = void)()` | `.` Field or variable writing, optionally takes a field symbol being written, otherwise `this` is being written. |
 | `nnary call(alias F)()` | `.` Function calls, taking the symbol of what function is being called. **Will not overload UFCS calls!** |
