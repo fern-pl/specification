@@ -97,7 +97,7 @@ The following operators are defined as op-assign, meaning that they perform the 
 | Operator |
 |----------|
 | `+=` `-=` `*=` `/=` `%=` `^^=` `~=` `[..]=` |
-| `<<=` `>>=` `<<<=` `^=` `&=` `\|=` |
+| `<<=` `>>=` `<<<=` `^=` `&=` `\|=` `[x]=` |
 
 #### Operator Overloading
 
@@ -131,7 +131,7 @@ Almost all operators may be overloaded in types, this is done by specifying the 
 | `unary $()` | `$` Range length operator. |
 | `nnary read(alias F = void)()` | `.` Field or variable reading, optionally takes a field symbol being read, otherwise `this` is being read. |
 | `nnary write(alias F = void)()` | `.` Field or variable writing, optionally takes a field symbol being written, otherwise `this` is being written. |
-| `nnary call(alias F)()` | `.` Function calls, taking the symbol of what function is being called. **Will not overload UFCS calls!** |
+| `nnary call(alias F, ARGS...)()` | `.` Function calls, taking the symbol of what function is being called. **Will not overload UFCS calls!** |
 
 All operators with a respective assignment operator may have that assignment operator overloaded by appending `=` before the parameters in the signature, like in `binary >>=(T)(T val)`.
 
