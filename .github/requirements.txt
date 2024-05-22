@@ -1,1 +1,1 @@
-mkdocs-windmill-dark
+mkdocs-rtd-dropdown

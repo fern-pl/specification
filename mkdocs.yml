@@ -40,7 +40,7 @@ nav:
 ### Theme customization
 
 theme:
-  name: windmill-dark
+  name: "rtd-dropdown"
 extra_css:
   - "https://raw.githubusercontent.com/fern-pl/specification/main/.github/custom.cs"
 
