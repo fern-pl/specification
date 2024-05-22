@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Fern developers">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Lexical - Fern Specification</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="https://raw.githubusercontent.com/fern-pl/specification/main/.github/custom.cs" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Lexical";
+    var mkdocs_page_input_path = "lexical.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Fern Specification</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="..">Home</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../grammar/">Grammar</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../metaprogramming/">Metaprogramming</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../model/">Model</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../LICENSE/">Copyleft</a>
+  </li>
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Fern Specification</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Lexical</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/fern-pl/specification/edit/main/specification/lexical.md"> Edit on fern-pl/specification</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="lexical">Lexical</h1>
+<h2 id="strings-and-characters">Strings and Characters</h2>
+<p>String literals may be defined using <code>q{...}</code> or <code>"..."</code>, when using the latter syntax <code>d</code> or <code>w</code> may be prepended to dictate the size of the characters (<code>dchar</code> or <code>wchar</code>) or <code>r</code> to dictate that all escapes are ignored. </p>
+<p>Character literals may be defined using <code>'...'</code> in which a single character is defined.</p>
+<h3 id="escapes">Escapes</h3>
+<p>Escape sequences are sequences of characters which result in a special character being used.</p>
+<table>
+<thead>
+<tr>
+<th>Sequence</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\'</code></td>
+<td>'</td>
+</tr>
+<tr>
+<td><code>\"</code></td>
+<td>"</td>
+</tr>
+<tr>
+<td><code>\\</code></td>
+<td>\</td>
+</tr>
+<tr>
+<td><code>\0</code></td>
+<td>Null terminator.</td>
+</tr>
+<tr>
+<td><code>\a</code></td>
+<td>Alert.</td>
+</tr>
+<tr>
+<td><code>\b</code></td>
+<td>Backspace.</td>
+</tr>
+<tr>
+<td><code>\f</code></td>
+<td>Form backfeed.</td>
+</tr>
+<tr>
+<td><code>\n</code></td>
+<td>Newline.</td>
+</tr>
+<tr>
+<td><code>\r</code></td>
+<td>Carriage return.</td>
+</tr>
+<tr>
+<td><code>\t</code></td>
+<td>Horizontal tab.</td>
+</tr>
+<tr>
+<td><code>\v</code></td>
+<td>Vertical tab.</td>
+</tr>
+<tr>
+<td><code>\xhh..</code></td>
+<td>Hexadecimal character insert.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="literals">Literals</h2>
+<p>Literal suffixes are suffixes which may be appended to a literal to change the way that the literal is formatted or interpreted.</p>
+<table>
+<thead>
+<tr>
+<th>Integral -Fix</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>u</code></td>
+<td>Unsigned, suffix.</td>
+</tr>
+<tr>
+<td><code>U</code></td>
+<td>Signed, suffix.</td>
+</tr>
+<tr>
+<td><code>L</code></td>
+<td>64-bit integer, suffix.</td>
+</tr>
+<tr>
+<td><code>f</code></td>
+<td>32-bit floating point, suffix.</td>
+</tr>
+<tr>
+<td><code>0x</code></td>
+<td>Hexadecimal, prefix.</td>
+</tr>
+<tr>
+<td><code>0X</code></td>
+<td>Hexadecimal, prefix.</td>
+</tr>
+<tr>
+<td><code>0o</code></td>
+<td>Octal, prefix.</td>
+</tr>
+<tr>
+<td><code>0b</code></td>
+<td>Binary, prefix.</td>
+</tr>
+</tbody>
+</table>
+<p>All integer literals may have their values separated by underscores for clarity, in replacement of commas such as in <code>10_000</code> where the literal is the value 10 thousand.</p>
+<h2 id="comments-terminators-and-scopes">Comments, Terminators, and Scopes</h2>
+<p><code>// comment</code></p>
+<p><code>/* multi-line comment */</code></p>
+<p>Comments in Fern use the syntax <code>\\</code> for single-line and <code>/*..*/</code> for multi-line.</p>
+<p><code>[type] name;</code></p>
+<p><code>[type] name[(parameters)]</code></p>
+<p>Terminators in Fern are <code>;</code>, which are necessary to end any expression or declaration of a signature (such as a type or function.)</p>
+<p><code>{ .. }</code></p>
+<p>Scopes in Fern are started and ended using curly brackets.</p>
+<h2 id="keywords">Keywords</h2>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>this</code></td>
+<td>Refers to the parent instance of the scope in which it was used, it is a comptime error if the scope has no instance.</td>
+</tr>
+<tr>
+<td><code>return</code></td>
+<td><a href="../grammar/#functions">Return</a></td>
+</tr>
+<tr>
+<td><code>delete</code></td>
+<td><a href="../grammar/#constructors-and-destructors">Destruct</a></td>
+</tr>
+<tr>
+<td><code>bool</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>true</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>false</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>byte</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>ubyte</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>short</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>ushort</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>int</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>uint</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>long</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>ulong</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>nint</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>nuint</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>void</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>char</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>wchar</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>dchar</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>string</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>wstring</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>dstring</code></td>
+<td><a href="../grammar/#builtins">Builtin</a></td>
+</tr>
+<tr>
+<td><code>pure</code></td>
+<td><a href="../grammar/#attributes">Attribute</a></td>
+</tr>
+<tr>
+<td><code>const</code></td>
+<td><a href="../grammar/#attributes">Attribute</a></td>
+</tr>
+<tr>
+<td><code>static</code></td>
+<td><a href="../grammar/#attributes">Attribute</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><a href="../grammar/#attributes">Attribute</a></td>
+</tr>
+<tr>
+<td><code>private</code></td>
+<td><a href="../grammar/#attributes">Attribute</a></td>
+</tr>
+<tr>
+<td><code>internal</code></td>
+<td><a href="../grammar/#attributes">Attribute</a></td>
+</tr>
+<tr>
+<td><code>partial</code></td>
+<td><a href="../grammar/#attributes">Attribute</a></td>
+</tr>
+<tr>
+<td><code>system</code></td>
+<td><a href="../grammar/#attributes">Attribute</a></td>
+</tr>
+<tr>
+<td><code>trusted</code></td>
+<td><a href="../grammar/#attributes">Attribute</a></td>
+</tr>
+<tr>
+<td><code>safe</code></td>
+<td><a href="../grammar/#attributes">Attribute</a></td>
+</tr>
+<tr>
+<td><code>inline</code></td>
+<td><a href="../grammar/#attributes">Attribute</a></td>
+</tr>
+<tr>
+<td><code>mustuse</code></td>
+<td><a href="../grammar/#attributes">Attribute</a></td>
+</tr>
+<tr>
+<td><code>ref</code></td>
+<td><a href="../grammar/#attributes">Attribute</a></td>
+</tr>
+<tr>
+<td><code>align</code></td>
+<td><a href="../grammar/#attributes">Attribute</a></td>
+</tr>
+<tr>
+<td><code>offset</code></td>
+<td><a href="../grammar/#attributes">Attribute</a></td>
+</tr>
+<tr>
+<td><code>atomic</code></td>
+<td><a href="../grammar/#attributes">Attribute</a></td>
+</tr>
+<tr>
+<td><code>alias</code></td>
+<td><a href="../grammar/#symbols-and-aliases">Alias</a></td>
+</tr>
+<tr>
+<td><code>module</code></td>
+<td><a href="../grammar/#module">Type</a></td>
+</tr>
+<tr>
+<td><code>import</code></td>
+<td><a href="../grammar/#import">Type</a></td>
+</tr>
+<tr>
+<td><code>struct</code></td>
+<td><a href="../grammar/#user-defined-types">Type</a></td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td><a href="../grammar/#user-defined-types">Type</a></td>
+</tr>
+<tr>
+<td><code>tagged</code></td>
+<td><a href="../grammar/#user-defined-types">Type</a></td>
+</tr>
+<tr>
+<td><code>unittest</code></td>
+<td><a href="../grammar/#unittest">Unittest</a></td>
+</tr>
+<tr>
+<td><code>function</code></td>
+<td><a href="../grammar/#function-and-delegate-pointer-types">Function Pointer</a></td>
+</tr>
+<tr>
+<td><code>delegate</code></td>
+<td><a href="../grammar/#function-and-delegate-pointer-types">Function Pointer</a></td>
+</tr>
+<tr>
+<td><code>if</code></td>
+<td><a href="../grammar/#statements">Statement</a></td>
+</tr>
+<tr>
+<td><code>else</code></td>
+<td><a href="../grammar/#statements">Statement</a></td>
+</tr>
+<tr>
+<td><code>foreach</code></td>
+<td><a href="../grammar/#statements">Statement</a></td>
+</tr>
+<tr>
+<td><code>foreach_reverse</code></td>
+<td><a href="../grammar/#statements">Statement</a></td>
+</tr>
+<tr>
+<td><code>while</code></td>
+<td><a href="../grammar/#statements">Statement</a></td>
+</tr>
+<tr>
+<td><code>goto</code></td>
+<td><a href="../grammar/#statements">Statement</a></td>
+</tr>
+<tr>
+<td><code>with</code></td>
+<td><a href="../grammar/#statements">Statement</a></td>
+</tr>
+<tr>
+<td><code>break</code></td>
+<td><a href="../grammar/#statements">Statement</a></td>
+</tr>
+<tr>
+<td><code>continue</code></td>
+<td><a href="../grammar/#statements">Statement</a></td>
+</tr>
+<tr>
+<td><code>mixin</code></td>
+<td><a href="../grammar/#mixins">Mixin</a></td>
+</tr>
+<tr>
+<td><code>is</code></td>
+<td><a href="../grammar/#types">Conditional</a></td>
+</tr>
+<tr>
+<td><code>debug</code></td>
+<td><a href="../model/#versoning">Versioning</a></td>
+</tr>
+<tr>
+<td><code>export</code></td>
+<td>Reserved</td>
+</tr>
+<tr>
+<td><code>extern</code></td>
+<td>Reserved</td>
+</tr>
+<tr>
+<td><code>assert</code></td>
+<td>Reserved</td>
+</tr>
+<tr>
+<td><code>__asm</code></td>
+<td>Reserved</td>
+</tr>
+</tbody>
+</table>
+<h2 id="special-symbols">Special Symbols</h2>
+<p>The prefix <code>__</code> is resserved for implementation and thus should be blacklisted for use in declarations. Such implementation are as follows, but implementations may add to this:</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__Windows</code></td>
+<td>Is Windows being targeted?</td>
+</tr>
+<tr>
+<td><code>__Linux</code></td>
+<td>Is Linux being targeted?</td>
+</tr>
+<tr>
+<td><code>__OSX</code></td>
+<td>Is OSX being targeted?</td>
+</tr>
+<tr>
+<td><code>__Posix</code></td>
+<td>Is Posix being targeted?</td>
+</tr>
+<tr>
+<td><code>__iOS</code></td>
+<td>Is iOS being targeted?</td>
+</tr>
+<tr>
+<td><code>__tvOS</code></td>
+<td>Is tvOS being targeted?</td>
+</tr>
+<tr>
+<td><code>__watchOS</code></td>
+<td>Is watchOS being targeted?</td>
+</tr>
+<tr>
+<td><code>__visionOS</code></td>
+<td>Is visionOS being targeted?</td>
+</tr>
+<tr>
+<td><code>__FreeBSD</code></td>
+<td>Is FreeBSD being targeted?</td>
+</tr>
+<tr>
+<td><code>__OpenBSD</code></td>
+<td>Is OpenBSD being targeted?</td>
+</tr>
+<tr>
+<td><code>__NetBSD</code></td>
+<td>Is NetBSD being targeted?</td>
+</tr>
+<tr>
+<td><code>__Solaris</code></td>
+<td>Is Solaris being targeted?</td>
+</tr>
+<tr>
+<td><code>__Android</code></td>
+<td>Is Android being targeted?</td>
+</tr>
+<tr>
+<td><code>__x86</code></td>
+<td>Is x86 being targeted?</td>
+</tr>
+<tr>
+<td><code>__x86_64</code></td>
+<td>Is x86_64 being targeted?</td>
+</tr>
+<tr>
+<td><code>__x64</code></td>
+<td>Is 64-bit being targeted?</td>
+</tr>
+<tr>
+<td><code>__x32</code></td>
+<td>Is 32-bit being targeted?</td>
+</tr>
+<tr>
+<td><code>__fnc</code></td>
+<td>Is the Fern Native Compiler being used?</td>
+</tr>
+<tr>
+<td><code>.sizeof</code></td>
+<td>The size in bytes of the symbol being targeted, this is a member.</td>
+</tr>
+<tr>
+<td><code>.alignof</code></td>
+<td>The alignment in bytes of the symbol being targeted, this is a member.</td>
+</tr>
+<tr>
+<td><code>.offsetof</code></td>
+<td>The offset in bytes of the symbol being targeted, this is a member.</td>
+</tr>
+<tr>
+<td><code>.typeof</code></td>
+<td>The type of the symbol being targeted, this is a member.</td>
+</tr>
+<tr>
+<td><code>.tag</code></td>
+<td>The tag of a tagged, this is a member.</td>
+</tr>
+<tr>
+<td><code>.ptr</code></td>
+<td>The pointer of an object, this is a member.</td>
+</tr>
+<tr>
+<td><code>.length</code></td>
+<td>The length of an array, this is a member.</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Copyright &copy; Fern Developers - 2024
+ <br>   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation.
+A copy of the license is included in the section entitled "Copyleft".
+</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

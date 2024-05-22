@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Fern developers">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Model - Fern Specification</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="https://raw.githubusercontent.com/fern-pl/specification/main/.github/custom.cs" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Model";
+    var mkdocs_page_input_path = "model.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Fern Specification</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="..">Home</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../grammar/">Grammar</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../metaprogramming/">Metaprogramming</a>
+  </li>
+    
+      
+
+
+  
+    
+    <li class="navtree toctree-l1 page current">
+      <a class="current" href="./">
+        Model
+      </a>
+    </li>
+    
+      
+
+
+
+  <li class="toctree-l1 current">
+    <ul class="subnav-l1 current">
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#versioning-and-contracts">Versioning and Contracts</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#memory-management">Memory Management</a>
+        </li>
+    
+      
+          
+
+  <li class="toctree-l2">
+    <a href="#inheritance">
+      Inheritance
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l2">
+    <ul class="subnav-l2 toc-hidden">
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#function-inheritance">Function Inheritance</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#type-inheritance">Type Inheritance</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l2">
+    <a href="#casts-and-conversions">
+      Casts and Conversions
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l2">
+    <ul class="subnav-l2 toc-hidden">
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#conversion-pipe">Conversion Pipe</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#downcast">Downcast</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#reinterpret-cast">Reinterpret Cast</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#pointer-cast">Pointer Cast</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#stranded-cast">Stranded Cast</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#promotion-cast">Promotion Cast</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#reorder-conversion">Reorder Conversion</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#fulfillment-conversion">Fulfillment Conversion</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#array-conversion">Array Conversion</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#promotion-ii-and-integral-conversion">Promotion II and Integral Conversion</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#demotion-conversion">Demotion Conversion</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#ufcs">UFCS</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#ctfe">CTFE</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#abi">ABI</a>
+        </li>
+    
+    </ul>
+  </li>
+
+
+  
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../LICENSE/">Copyleft</a>
+  </li>
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Fern Specification</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Model</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/fern-pl/specification/edit/main/specification/model.md"> Edit on fern-pl/specification</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="model">Model</h1>
+<p>Fern is symbol-oriented, meaning that no matter what you're doing, it prioritizes symbols and guaranteeing semantics over strong-typing and data storage.</p>
+<p>This is intended to be without compromise, errors will be thrown if Fern cannot determine how to make your code function, but also the backend may implicitly do things without your knowledge if it means compilation.</p>
+<h2 id="versioning-and-contracts">Versioning and Contracts</h2>
+<p>Versioning may be done by using <code>static if</code> to influence code generation alongside <a href="../lexical/#special-symbols">compilation symbols</a>. The <code>debug</code> keyword is provided to selectively compile a line or scope if targeting debug build.</p>
+<h2 id="memory-management">Memory Management</h2>
+<p>Fern uses hybrid LRC and GC memory management. This means Fern will default to linear reference counting, counting the references to variables in the current hierarchy until references reach zero and free is inserted into the code to release the variable.</p>
+<p>Upon failure a garbage collector will be defaulted to, incrementing an internal counter which will indicate the number of living GC-controlled objects, the garbage collector will periodically run (deterministic but this is not to be exposed) and will not do any collections or marking unless the counter of living objects is above zero.</p>
+<p>Information on LRC is highly implementation dependent, but expected behavior can be found in <a href="../fnc/#phases">phases</a>.</p>
+<p>The garbage collector is also implementation dependent, but expected behavior is as follows:</p>
+<blockquote>
+<p>All allocations add comptime metadata about the types being allocated and any pointers they contain at what offsets.
+1. A living objects counter is incremented in the GC.
+2. GC checkpoint is inserted in the last function call of a function which allocated a GC object, this will result in the GC running at the start of said function.
+3. The GC will run if the living objects counter is greater than zero, which will start by halting all threads.
+4. While all threads are halted the stack will be scanned checking for all pointers of any kind, all found pointers are added to a list, and then threads are resumed.
+5. The heap is scanned, checking all pointer offsets in allocated regions, all found pointers are added to a list.
+6. Any region not pointed to by any pointer in the list are freed and the living objects counter is decremented by the number of freed regions and set to a minimum of 0.</p>
+</blockquote>
+<h2 id="inheritance">Inheritance</h2>
+<p><code>name [: [^]inherits..]</code></p>
+<p>Inheritance allows for code to be easier reused across your codebase and more consistent, clear distribution of members and data across inheriting symbols. </p>
+<blockquote>
+<p>The <a href="../grammar/#operators">downcasting</a> (<code>&lt;|</code>) operator helps facilitate moving to inherited types.</p>
+<p>Where are interfaces? Fret not child, they exist no more, use abstract functions to achieve such lofty goals.</p>
+</blockquote>
+<h3 id="function-inheritance">Function Inheritance</h3>
+<p>Functions may inherit from another function, this simply causes the function to act as another function but with localized attributes.</p>
+<p>Return value and parameters must match up with the inherited function.</p>
+<pre><code>int foo(long a) =&gt; a |&gt; int;
+
+// bar inherits all of the code from foo, meaning that it functions the exact same, but we can change the attributes.
+int bar(long a) pure : foo;
+
+// This is illegal, baz may not inherit from foo because it has a different return value.
+void baz(long a) : foo;
+</code></pre>
+<h3 id="type-inheritance">Type Inheritance</h3>
+<p>Types may inherit from other types, causing all members to be inherited. If the inheriting type has a member identical to an inherited type, the inheritance of that member will be ignored (retaining only one.)</p>
+<p>An inherited type must have at least one member to inherit, not have any non-abstract member collisions, and not be a builtin, array, pointer, or tagged, or a comptime error is thrown.</p>
+<p>Abstract functions contained within an inherited type must be implemented by the inheriting type or a comptime error will be thrown, this is done by defining the member and giving it a body.</p>
+<p>A type may inherit a single prime (<code>^</code>) type prepended before the inherited type name, this will result in all operators to be inherited, which is disabled by default.</p>
+<pre><code>struct A
+{
+    int a;
+
+    abstract int foo();
+}
+
+struct B
+{
+    long b;
+}
+
+// C inherits all members of A and B, with A being the prime inherit and thus technically the operators of A are inherited, but we don't have any. 
+struct C : ^A, B
+{
+    // We must declare a body for foo, as it is an abstract and requires an implementation;
+    int foo() =&gt; 1337;
+}
+</code></pre>
+<h2 id="casts-and-conversions">Casts and Conversions</h2>
+<p>Casts in Fern are largely implicit, and need not an operator, however, the <code>|&gt;</code> is used for conversion and may also perform casting or conversion piping.</p>
+<p>All casts and conversions will recursively try to cast members, but will not try to convert.</p>
+<blockquote>
+<p>An comptime error will be thrown if it is impossible to cast from one type to another or to convert from one type to another.</p>
+</blockquote>
+<h3 id="conversion-pipe">Conversion Pipe</h3>
+<p><code>variable |&gt; type[.member]</code></p>
+<p>Conversion piping is used to pipe data to a type's member. It may also be used to normally convert data to a type if no member is specified.</p>
+<blockquote>
+<p>Piping to a member will result in the data first being cast or converted to the type in order to access the member.</p>
+</blockquote>
+<h3 id="downcast">Downcast</h3>
+<p><code>variable &lt;|</code></p>
+<p><code>type &lt;|</code></p>
+<p>Downcasting casts a variable to its superior type or retrieves the symbol of a type's superior type.</p>
+<h3 id="reinterpret-cast">Reinterpret Cast</h3>
+<p>Reinterpreting is a direct cast from one type to another, where no bits are lost or gained and field layout is retained across the cast.</p>
+<blockquote>
+<p>Static arrays may reinterpret to any type, so long as no bits are lost or gained.</p>
+</blockquote>
+<pre><code>struct A
+{
+    int a;
+    byte b;
+}
+
+struct B
+{
+    int a;
+    byte b;
+}
+
+// B is implicitly reinterpreted as A, since they have the same field layout
+A foo = B(1, 2);
+</code></pre>
+<h3 id="pointer-cast">Pointer Cast</h3>
+<p>Pointer casting is a direct cast from one pointer to another where element types between the two pointers are able to cast or the type being cast to is <code>void*</code>, <code>nint</code>, or <code>nuint</code>.</p>
+<pre><code>struct A
+{
+    int a;
+}
+
+A foo;
+// A* is being cast to int* because A may cast to int.
+int* bar = &amp;foo;
+// int* is being cast to void* because all pointers may cast to void*
+void* baz = bar;
+// void* is being cast to nuint because all pointers may cast to nuint.
+nuint foo2 = baz;
+</code></pre>
+<h3 id="stranded-cast">Stranded Cast</h3>
+<p>Stranded casting is a form of reinterpret cast in which a structure with a single field may cast to the type of that single field.</p>
+<pre><code>struct A
+{
+    int a;
+}
+
+// foo is now the value of `A.a` because it is a stranded field.
+int foo = A();
+</code></pre>
+<h3 id="promotion-cast">Promotion Cast</h3>
+<p>Integers may promote to a larger integer in which they do not lose any bits and maintain the same format.</p>
+<blockquote>
+<p>As <code>float</code> and <code>double</code> do not maintain the same format, <code>float</code> <em>cannot</em> be promoted to <code>double</code>.</p>
+</blockquote>
+<pre><code>int foo = 1;
+// foo is promoted to long.
+long bar = foo;
+</code></pre>
+<h3 id="reorder-conversion">Reorder Conversion</h3>
+<p>Reordering is a conversion from one type to another, where no bits are lost or gained but field layout is not retained across the conversion.</p>
+<pre><code>struct A
+{
+    byte a;
+    int b;
+}
+
+struct B
+{
+    int a;
+    byte b;
+}
+
+// B is implicitly reordered to A, since the field layout needs only reordered.
+A foo = B(1, 2);
+</code></pre>
+<h3 id="fulfillment-conversion">Fulfillment Conversion</h3>
+<p>Fulfillment is a conversion in which as many fields as possible are transfered from one type to another.</p>
+<p>It is a comptime error for none of the fields in either type to be fulfilled.</p>
+<pre><code>struct A
+{
+    int a;
+    short b;
+    long c;
+}
+
+struct B
+{
+    int a;
+    byte b;
+}
+
+// The fields a and b from B are fulfilled in A as well as possible, meaning now the value of a and b in A are the same as they were in B, and c becomes zeroed.
+A foo = B(1, 2) |&gt; A;
+</code></pre>
+<h3 id="array-conversion">Array Conversion</h3>
+<p>This conversion only is necessary when converting <strong>to</strong> an array type, casting from happens implicitly.</p>
+<p>Array conversion is a conversion in which the length field of the array is the only thing modified, as it adjusts to the correct size based on the element.</p>
+<pre><code>long[] foo = [1L];
+// long[] is converted to a byte[8], bounds checking determines if this is safe.
+byte[8] bar = foo |&gt; byte[8];
+// byte[8] is converted to a long[], with the length automatically determined to be 1.
+long[] foo = bar |&gt; long[];
+</code></pre>
+<h3 id="promotion-ii-and-integral-conversion">Promotion II and Integral Conversion</h3>
+<p>Integrals may freely convert to each other, where converting a floating point to an integer will result in rounding up from <code>.5</code> to the nearest whole number.</p>
+<p>This also permits arbitrary pointer conversion to and from any pointer or integer type.</p>
+<p>Promotion also may happen from <code>float</code> to <code>double</code> and other integrals which do not maintain the same format or have data loss.</p>
+<pre><code>float foo = 2.3;
+// bar will be 2, as it is rounded down from `.5`.
+int bar = foo |&gt; int;
+
+// This is very bad but legal.
+void* foo2 = bar |&gt; void*;
+// foo2 is actually cast from void* to int*.
+int* bar2 = foo2 |&gt; int*;
+</code></pre>
+<h3 id="demotion-conversion">Demotion Conversion</h3>
+<p>Integrals may demote from one to another, where bits are lost and format is irrelevant.</p>
+<pre><code>long foo = 1;
+/// 32 bits are lost, in this conversion.
+int bar = foo |&gt; int;
+</code></pre>
+<h2 id="ufcs">UFCS</h2>
+<h2 id="ctfe">CTFE</h2>
+<h2 id="abi">ABI</h2>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../LICENSE/" class="btn btn-neutral float-right" title="Copyleft">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../metaprogramming/" class="btn btn-neutral" title="Metaprogramming"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Copyright &copy; Fern Developers - 2024
+ <br>   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation.
+A copy of the license is included in the section entitled "Copyleft".
+</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../metaprogramming/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../LICENSE/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

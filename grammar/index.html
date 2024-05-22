@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Fern developers">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Grammar - Fern Specification</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="https://raw.githubusercontent.com/fern-pl/specification/main/.github/custom.cs" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Grammar";
+    var mkdocs_page_input_path = "grammar.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Fern Specification</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="..">Home</a>
+  </li>
+    
+      
+
+
+  
+    
+    <li class="navtree toctree-l1 page current">
+      <a class="current" href="./">
+        Grammar
+      </a>
+    </li>
+    
+      
+
+
+
+  <li class="toctree-l1 current">
+    <ul class="subnav-l1 current">
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#module">Module</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#import">Import</a>
+        </li>
+    
+      
+          
+
+  <li class="toctree-l2">
+    <a href="#types">
+      Types
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l2">
+    <ul class="subnav-l2 toc-hidden">
+    
+      
+          
+
+  <li class="toctree-l3 current with-children">
+    <a href="#builtins">
+      Builtins
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l3 current">
+    <ul class="subnav-l3 current">
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#operators">Operators</a>
+        </li>
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#operator-overloading">Operator Overloading</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l3">
+    <a href="#arrays">
+      Arrays
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l3">
+    <ul class="subnav-l3 toc-hidden">
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#masks">Masks</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#pointers">Pointers</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#user-defined-types">User-defined Types</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#tagged">Tagged</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#tuple">Tuple</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l2">
+    <a href="#functions">
+      Functions
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l2">
+    <ul class="subnav-l2 toc-hidden">
+    
+      
+          
+
+  <li class="toctree-l3 current with-children">
+    <a href="#parameters-and-arguments">
+      Parameters and Arguments
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l3 current">
+    <ul class="subnav-l3 current">
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#parameters">Parameters</a>
+        </li>
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#arguments">Arguments</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l3">
+    <a href="#delegates-and-function-pointers">
+      Delegates and Function Pointers
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l3">
+    <ul class="subnav-l3 toc-hidden">
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#delegate-declaration">Delegate declaration:</a>
+        </li>
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#function-and-delegate-pointer-types">Function and delegate pointer types:</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#lambdas">Lambdas</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#properties">Properties</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#constructors-and-destructors">Constructors and Destructors</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#unittest">Unittest</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l2">
+    <a href="#fields-and-variables">
+      Fields and Variables
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l2">
+    <ul class="subnav-l2 toc-hidden">
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#successive-declaration">Successive Declaration</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#bitfields">Bitfields</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l2">
+    <a href="#attributes">
+      Attributes
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l2">
+    <ul class="subnav-l2 toc-hidden">
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#function-exclusive">Function Exclusive</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#voidable">voidable</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#user-defined-attributes">User-defined Attributes</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l2">
+    <a href="#symbols-and-aliases">
+      Symbols and Aliases
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l2">
+    <ul class="subnav-l2 toc-hidden">
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#generics">Generics</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#mixins">Mixins</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#statements">Statements</a>
+        </li>
+    
+    </ul>
+  </li>
+
+
+  
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../metaprogramming/">Metaprogramming</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../model/">Model</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../LICENSE/">Copyleft</a>
+  </li>
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Fern Specification</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Grammar</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/fern-pl/specification/edit/main/specification/grammar.md"> Edit on fern-pl/specification</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="grammar">Grammar</h1>
+<h2 id="module">Module</h2>
+<p><code>module name</code></p>
+<p>Modules are top level declarations which act like namespaces and may contain lower members inside of it.</p>
+<p>A module identifier cannot be used more than once unless the module was declared using the <code>partial</code> attribute.</p>
+<p>A declaration of a module appears as such <code>module name;</code> or <code>partial module name;</code> where <code>name</code> is the name of the module which is being declared.</p>
+<h2 id="import">Import</h2>
+<p><code>import name</code></p>
+<p>Import declarations are used to import modules to be used, and may be used anywhere within code, with their effects only applicable in the scope which they were declared.</p>
+<p>A whole module may be imported with <code>import name;</code> where <code>name</code> is the name of the module being imported, this may include submodules such as in <code>import foo.bar;</code> where the submodule <code>bar</code> in <code>foo</code> is imported, along with all of the submodules of <code>bar</code>.</p>
+<p>A selection may be imported with <code>import name : foo</code> where <code>name</code> is the name of the module being imported from and <code>foo</code> is the symbol being imported from the module, the same submodule importing rules apply as with whole module imports.</p>
+<p>A public import may be import even to other modules which import the module in which the public import was declared, this can be done like <code>public import name</code> where <code>name</code> is the name of the module being imported.</p>
+<pre><code>module foo;
+
+public import bar;
+</code></pre>
+<p>In this example importing <code>foo</code> would result in also importing <code>bar</code>.</p>
+<h2 id="types">Types</h2>
+<p><code>type is type</code></p>
+<p><code>variable is type</code></p>
+<p>Types and variables may be compared to a type using <code>is</code> to evaluate if they are of the same type, this may also be used for comparing a variable to a tagged to see what it contains.</p>
+<p>Types have a minimum size of 1 byte, but it is a comptime error to use a type with no members to declare a variable. (see <a href="./#fields-and-variables">Fields and Variables</a>)</p>
+<h3 id="builtins">Builtins</h3>
+<p>The following types are built into Fern, and may be used without any imports:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Definition</th>
+<th>Size (b)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bool</code></td>
+<td>Boolean, <code>false</code> if 0, <code>true</code> otherwise.</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>byte</code></td>
+<td>8-bit signed integer.</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>ubyte</code></td>
+<td>8-bit unsigned integer.</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>short</code></td>
+<td>16-bit signed integer.</td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>ushort</code></td>
+<td>16-bit unsigned integer.</td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>int</code></td>
+<td>32-bit signed integer.</td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>uint</code></td>
+<td>32-bit unsigned integer.</td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>long</code></td>
+<td>64-bit signed integer.</td>
+<td>8</td>
+</tr>
+<tr>
+<td><code>ulong</code></td>
+<td>64-bit unsigned integer.</td>
+<td>8</td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td>32-bit floating point.</td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>64-bit floating point.</td>
+<td>8</td>
+</tr>
+<tr>
+<td><code>void</code></td>
+<td>Represents an untype, may be pointed to but not explicitly declared as a variable.</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>nint</code></td>
+<td>Represents the max size signed integer available.</td>
+<td>variable</td>
+</tr>
+<tr>
+<td><code>nuint</code></td>
+<td>Represents the max size unsigned integer available.</td>
+<td>variable</td>
+</tr>
+<tr>
+<td><code>char</code></td>
+<td>8-bit character integer.</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>wchar</code></td>
+<td>16-bit character integer.</td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>dchar</code></td>
+<td>32-bit character integer.</td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>string</code></td>
+<td>A string formed out of <code>char</code></td>
+<td>variable (array)</td>
+</tr>
+<tr>
+<td><code>wstring</code></td>
+<td>A string formed out of <code>wchar</code></td>
+<td>variable (array)</td>
+</tr>
+<tr>
+<td><code>dstring</code></td>
+<td>A string formed out of <code>dchar</code></td>
+<td>variable (array)</td>
+</tr>
+</tbody>
+</table>
+<p>Strings are defined as dynamic arrays if their value is not known at comptime, or static arrays if their value is known at comptime (ie: string literals.)</p>
+<h4 id="operators">Operators</h4>
+<p>Operators are a builtin part of the language used to perform certain operations. All of these may be overloaded and functionality varies, but should by default apply by normal rationality.</p>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\|&gt;</code></td>
+<td>Conversion pipe operator, used to pipe data to a type, member function, or field.</td>
+</tr>
+<tr>
+<td><code>&lt;\|</code></td>
+<td>Downcast operator, downcasts data to its superior type or dereference.</td>
+</tr>
+<tr>
+<td><code>&gt;</code> <code>&lt;</code> <code>&lt;=</code> <code>&gt;=</code></td>
+<td>Comparison operators, special behavior is defined for array types, which return a mask of where the comparison returned true.</td>
+</tr>
+<tr>
+<td><code>==</code> <code>!=</code> <code>&amp;&amp;</code> <code>\|\|</code>, <code>!</code></td>
+<td>Equality and logical operators, with <code>!</code> and <code>!=</code> as NOT operators.</td>
+</tr>
+<tr>
+<td><code>[x]</code> <code>[..]</code> <code>[]</code></td>
+<td>Slicing and indexing operators, <code>[x]</code> will take the element of the given index, <code>[..]</code> will take the mask or slice of the given range, and <code>[]</code> will get an array as an explicit array type or element-wise array that can have operators performed on it.</td>
+</tr>
+<tr>
+<td><code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>%</code> <code>^^</code> <code>&lt;&lt;</code> <code>&gt;&gt;</code> <code>&lt;&lt;&lt;</code> <code>^</code> <code>&amp;</code> <code>\|</code> <code>~</code></td>
+<td>Binary operators. <code>^^</code> performs exponentiation and <code>~</code> is used for range concatenation.</td>
+</tr>
+<tr>
+<td><code>--</code> <code>++</code> <code>~</code> <code>-</code></td>
+<td>Unary postdecrement, postincrement, NOT, and NEG operators. Postdecrement and postincrement may appear as preX versions in which they are after a variable.</td>
+</tr>
+<tr>
+<td><code>&amp;</code></td>
+<td>Unary pointer reference operator.</td>
+</tr>
+<tr>
+<td><code>x if y else z</code></td>
+<td>Ternary alternate operator.</td>
+</tr>
+<tr>
+<td><code>x..y</code></td>
+<td>Iota operator, creates a range from <code>x</code> to <code>y</code> not containing the value <code>y</code>.</td>
+</tr>
+<tr>
+<td><code>-&gt;</code></td>
+<td>Symbol member operator, which is evaluated at comptime and may evaluate to an <code>alias</code> function operating on a symbol.</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>Dollar operator, gets the length of a range, must be overloaded for custom ranges.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Unlike other languages you must use the LTR operator <code>&lt;|</code> to dereference. All unary operators are technically RTL, but most have been preserved as they don't have too much of an impact on code readability, <code>*</code> was singled out due to pointer dereferencing being a common operation and <code>&amp;</code> rarely reading RTL in code.</p>
+</blockquote>
+<p>The following operators are defined as op-assign, meaning that they perform the operation followed by an assignment.</p>
+<blockquote>
+<p>It is highly recommended to use the mask assign operator instead of masking and then assigning when working with masks.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code> <code>%=</code> <code>^^=</code> <code>~=</code> <code>[..]=</code></td>
+</tr>
+<tr>
+<td><code>&lt;&lt;=</code> <code>&gt;&gt;=</code> <code>&lt;&lt;&lt;=</code> <code>^=</code> <code>&amp;=</code> <code>\|=</code> <code>[x]=</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="operator-overloading">Operator Overloading</h4>
+<p>Almost all operators may be overloaded in types, this is done by specifying the n-nary of the operator followed by the operator, refer to the following list:</p>
+<table>
+<thead>
+<tr>
+<th>Signature</th>
+<th>Overload</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nnary read(alias F = void)()</code></td>
+<td><code>.</code> Field or variable reading, optionally takes a field symbol being read, otherwise <code>this</code> is being read.</td>
+</tr>
+<tr>
+<td><code>nnary write(alias F = void)()</code></td>
+<td><code>.</code> Field or variable writing, optionally takes a field symbol being written, otherwise <code>this</code> is being written.</td>
+</tr>
+<tr>
+<td><code>nnary call(alias F, ARGS...)()</code></td>
+<td><code>.</code> Function calls, taking the symbol of what function is being called. <strong>Will not overload UFCS calls!</strong></td>
+</tr>
+<tr>
+<td><code>nnary \|&gt;(S...)()</code></td>
+<td><code>\|&gt;</code> Conversion pipe, takes the sequence of symbols being piped through.</td>
+</tr>
+<tr>
+<td><code>nnary &lt;\|()</code></td>
+<td><code>&lt;\|</code> Downcast or dereference.</td>
+</tr>
+<tr>
+<td><code>binary &lt;=&gt;(T)(T val)</code></td>
+<td><code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code> Comparison operators, return 0 for greater, 1 for lesser, 2 for greater or equal, or any other value for lesser or equal.</td>
+</tr>
+<tr>
+<td><code>binary ==(T)(T val)</code></td>
+<td><code>==</code> <code>!=</code> Equality operators.</td>
+</tr>
+<tr>
+<td><code>binary [](T)(T val)</code></td>
+<td><code>[x]</code> Index operator.</td>
+</tr>
+<tr>
+<td><code>binary [..](T)(T val)</code></td>
+<td><code>[..]</code> Slice mask operator.</td>
+</tr>
+<tr>
+<td><code>binary *(T)(T val)</code></td>
+<td><code>*</code> Multiplication operator.</td>
+</tr>
+<tr>
+<td><code>binary /(T)(T val)</code></td>
+<td><code>/</code> Division operator.</td>
+</tr>
+<tr>
+<td><code>binary +(T)(T val)</code></td>
+<td><code>+</code> Addition operator.</td>
+</tr>
+<tr>
+<td><code>binary -(T)(T val)</code></td>
+<td><code>-</code> Subtraction operator.</td>
+</tr>
+<tr>
+<td><code>binary %(T)(T val)</code></td>
+<td><code>%</code> Modulus operator.</td>
+</tr>
+<tr>
+<td><code>binary ^^(T)(T val)</code></td>
+<td><code>^^</code> Exponentiation operator.</td>
+</tr>
+<tr>
+<td><code>binary &lt;&lt;(T)(T val)</code></td>
+<td><code>&lt;&lt;</code> SHL operator.</td>
+</tr>
+<tr>
+<td><code>binary &gt;&gt;(T)(T val)</code></td>
+<td><code>&gt;&gt;</code> SHL operator.</td>
+</tr>
+<tr>
+<td><code>binary &lt;&lt;&lt;(T)(T val)</code></td>
+<td><code>&lt;&lt;&lt;</code> SHL sign preserved operator.</td>
+</tr>
+<tr>
+<td><code>binary ^(T)(T val)</code></td>
+<td><code>^</code> XOR operator.</td>
+</tr>
+<tr>
+<td><code>binary &amp;(T)(T val)</code></td>
+<td><code>&amp;</code> AND operator.</td>
+</tr>
+<tr>
+<td><code>binary \|(T)(T val)</code></td>
+<td><code>\|</code> OR operator.</td>
+</tr>
+<tr>
+<td><code>binary ~(T)(T val)</code></td>
+<td><code>~</code> Range concatentation operator.</td>
+</tr>
+<tr>
+<td><code>binary &amp;~(T)(T val)</code></td>
+<td><code>&amp; ~</code> ANDN operator, AND followed by a NOT.</td>
+</tr>
+<tr>
+<td><code>unary --()</code></td>
+<td><code>--</code> Postdecrement and predecrement operator.</td>
+</tr>
+<tr>
+<td><code>unary ++()</code></td>
+<td><code>++</code> Postincrement and preincrement operator.</td>
+</tr>
+<tr>
+<td><code>unary -()</code></td>
+<td><code>-</code> NEG operator.</td>
+</tr>
+<tr>
+<td><code>unary $()</code></td>
+<td><code>$</code> Range length operator.</td>
+</tr>
+<tr>
+<td><code>unary !~()</code></td>
+<td><code>!</code> <code>~</code> NOT operators.</td>
+</tr>
+</tbody>
+</table>
+<p>All operators with a respective assignment operator may have that assignment operator overloaded by appending <code>=</code> before the parameters in the signature, like in <code>binary &gt;&gt;=(T)(T val)</code>.</p>
+<h3 id="arrays">Arrays</h3>
+<p><code>type[]</code></p>
+<p><code>type[length]</code></p>
+<p>Fern defines 2 kinds of arrays, static arrays, dynamic arrays.
+Upon construction, all arrays may use the syntax <code>T[x]</code> to define their length.</p>
+<p>Dynamic arrays may be created out of any type using the syntax <code>T[]</code> and they store their length and pointer to data as fields <code>length</code> and <code>ptr</code>.</p>
+<p>Static arrays must have their length known at comptime and may be created out of any type using the syntax <code>T[L]</code> where <code>L</code> is the length of the array. Unlike dynamic arrays, static arrays do not store data by reference, and instead are value-types. However, they still retain comptime data for <code>length</code> and <code>ptr</code> gets a pointer to the data.</p>
+<p>Static arrays may not be concatenated through use of <code>~</code>, however they still must have their length initialized at first.</p>
+<blockquote>
+<p>Arrays are cumulative, meaning that you can have arrays of arrays and so on.</p>
+</blockquote>
+<h4 id="masks">Masks</h4>
+<p>Arrays may be masked, this cannot explicitly be accessed as a type by the user, but can be created using slicing operations and converted back to ranges by way of the <code>[]</code> operator or assignment/conversion to an array type variable.</p>
+<h3 id="pointers">Pointers</h3>
+<p><code>type*</code></p>
+<p>Pointers are natively sized integers which point to memory, they may be created by using the reference operator <code>&amp;</code> and dereferenced by using the dereference operator <code>*</code>.</p>
+<p>Pointers may be represented as <code>void*</code>, <code>nint</code>, <code>nuint</code>, or appending <code>*</code> to the end of a type.</p>
+<blockquote>
+<p>Pointers share operators with static arrays, meaning they may be sliced, indexed, and so on.</p>
+<p>Pointers are cumulative, meaning that you can point to pointers and so on.</p>
+</blockquote>
+<h3 id="user-defined-types">User-defined Types</h3>
+<p><code>[aggregation] name</code></p>
+<p>Fern declares 3 different kinds of user-defined types.</p>
+<p>A type with no members has a minimum size of 1 byte, however it may also not be explicitly used to declare a variable.</p>
+<p>Types may be created anonymously, directly inlining their effects by not defining a name, this may not be done using classes as an anonymous nor in a tagged.</p>
+<p>An example of struct/class syntax is as follows:</p>
+<pre><code>struct/class Element
+{
+    int kind;
+    short value;
+    // Anonymous type, acting as a union.
+    tagged
+    {
+        // These occupy the same memory space, with the size being the maximum size used by any type inside of it.
+        int foo;
+        long bar;
+    }
+}
+</code></pre>
+<p>An example of tagged syntax is as follows:</p>
+<pre><code>tagged IpAddr
+{
+    ubyte[4] V4;
+    string V6;
+    // This will be the type of the tag, which is uint.
+    // The prime inherit will modify the type of the tag.
+    V819;
+}
+</code></pre>
+<p>All types may, but not must, contain member declarations, and the above are only examples.</p>
+<h3 id="tagged">Tagged</h3>
+<p><code>(types..)</code></p>
+<p>Tagged have a <code>tag</code> which indicates what kind of value they hold, but they will only ever hold one of their fields as a value. Tagged may be checked for their <code>tag</code> by doing <code>foo is name</code> or <code>foo is type</code> like in <code>foo is V4</code>.</p>
+<p>Unlike all other types, tagged may inherit a builtin type as a prime inherit, which will act as the default type for all fields and also the type of the <code>tag</code>, by default the prime inherit will be assumed to be <code>uint</code>.</p>
+<p>Tagged may be implicitly created by wrapping multiple types in parenthesis, like <code>(int, short) foo</code> and assignment when value is one of <code>int</code> and <code>short</code>.
+Additionally, tagged may implicitly create from a type by accessing a member, like from <code>IpAddr.V4</code> in which the default value of <code>V4</code> is selected.</p>
+<p>If all members of a tagged are <code>const</code>, they may have a value assigned by default, <code>tag</code> is stripped away (but may still be accessed) and it acts exactly as an <code>enum</code> would in languages like D, Java, or C#. Otherwise default assignment is not allowed.</p>
+<p>If a tagged is an anonymous type it will not have a <code>tag</code>, and will act as a typical union type would.</p>
+<pre><code>tagged A : ^ubyte
+{
+    // This will result in the runtime having to do a lookup if converting 3 to A, because A is not entirely const.
+    const a = 3;
+    int b;
+}
+
+A foo = A.a;
+A bar = A.b(2);
+// Illegal! No explicit constructor calls because it is unknown what the tag is supposed to be!
+A baz = A(2);
+</code></pre>
+<p>Fields in tagged act as the constructor as well as data, and tagged may not be directly constructed using the type.</p>
+<h3 id="tuple">Tuple</h3>
+<p><code>[types..]</code></p>
+<p><code>[values..]</code></p>
+<p>Tuples may be implicitly created by wrapping multiple types in braces, like <code>[int, short] foo</code> and assignment when value is both of <code>int</code> and <code>short</code> as an array literal.</p>
+<p>Tuples will usually be weighted above array literals when assigning with the brace syntax to a tuple, otherwise array literals will be weighted above.</p>
+<h2 id="functions">Functions</h2>
+<p><code>[type] name([(parameters)]) { .. }</code></p>
+<p><code>name([arguments])</code></p>
+<p><code>return =&gt; [variable][value]</code></p>
+<p>Functions are executable code with parameters which may be invoked through the syntax <code>name([arguments])</code>.</p>
+<pre><code>T foo(...)
+{
+    ...
+}
+</code></pre>
+<p>Functions that return a type other than <code>void</code> must have a return value. This can be done by using <code>return</code>, which may be used as a variable that will be returned at the end of the function, or as a <code>return</code> statement, which may appear as <code>return;</code> or <code>return =&gt; [variable][value];</code>.</p>
+<p>Setting or modifying the value of <code>return</code> does not have any effect in a <code>void</code> function, but the <code>return;</code> statement will always lead to an early return.</p>
+<h3 id="parameters-and-arguments">Parameters and Arguments</h3>
+<h5 id="parameters">Parameters</h5>
+<p><code>[variable declaration]...</code></p>
+<p>Parameters appended with <code>...</code> after their declaration will act as variadic, or array parameters which may take an infinite number of said declaration at the end of the list.
+If a function takes one parameter of an array type, it will be variadic by default, like in this example:</p>
+<pre><code>void foo(int[2])
+{
+    // ...
+}
+
+foo(1, 2);
+foo([1, 2]);
+</code></pre>
+<p>Variadics may appear only once in a signature, and must be the very last declaration, however this rule is slightly bypassed with generics where variadics may appear twice if one of the variadics is used as the type of a runtime argument, like in this example:</p>
+<pre><code>void foo(A..., B...)(B b)
+{
+    // ...
+}
+
+// It is impossible to set B explicitly, but this is allowed because it can be set implicitly based on the arguments passed.
+// A = [int, string]
+// B = [int, int]
+foo!(int, string)(1, 2);
+</code></pre>
+<p>Parameters with values set after their declaration will have optional values set by default, these, like variadic parameters, must be the last parameters in the function signature.</p>
+<h5 id="arguments">Arguments</h5>
+<p><code>[variable][value]...</code></p>
+<p><code>parameter_name: [variable][value]...</code></p>
+<p>Parameters are syntactically an array of variable declarations, and are part of the signature of a declaration.</p>
+<p>Arguments are the actual values passed to something, like a function, and are either variables or values. You may declare a variable inline as an argument, like <code>foo(int a)</code> which would create a new variable <code>a</code> from the point of that call onwards.</p>
+<p>Named arguments may be used by using <code>parameter_name:</code> before the value being passed as an argument, where <code>parameter_name</code> is the name of the parameter the argument corresponds to.</p>
+<h3 id="delegates-and-function-pointers">Delegates and Function Pointers</h3>
+<h5 id="delegate-declaration">Delegate declaration:</h5>
+<p><code>[(parameters)] { ... }</code></p>
+<h5 id="function-and-delegate-pointer-types">Function and delegate pointer types:</h5>
+<p><code>type function([parameters])</code></p>
+<p><code>type delegate([parameters])</code></p>
+<p>Delegates are scope-independent variable functions which may be passed around and called, they are identical to function pointers in practice, but store context data meaning they are aware of <code>this</code>.</p>
+<p>You may explicitly create a delegate, but functions and function pointers will also become delegates implicitly.</p>
+<h3 id="lambdas">Lambdas</h3>
+<p><code>[parameters] =&gt; ..</code></p>
+<p>Lambdas may be declared in function/property syntax or as inline lambdas such as <code>a =&gt; return a == 1</code> where the parameter types are inferred and a delegate is constructed based on the lambda.</p>
+<p>Use of a lambda for a property will result in the property only having a <code>get</code>.</p>
+<pre><code>// foo will always return 1.
+int foo() =&gt; 1;
+
+// foo is a property that will always return 1.
+property int foo() =&gt; 1;
+</code></pre>
+<h3 id="properties">Properties</h3>
+<p><code>property [type] name { [get { .. }] [set { .. }]</code></p>
+<p>Properties are special functions which act as fields, they must have the following declaration syntax, both a <code>get</code> and <code>set</code> are not necessary but you must have one of them.</p>
+<pre><code>property T foo()
+{
+    get
+    {
+        ...
+    }
+    set
+    {
+        ...
+    }
+}
+</code></pre>
+<p>This may be accessed in code as such <code>T foo_value = foo</code> or <code>foo = new_foo_value</code>.</p>
+<h3 id="constructors-and-destructors">Constructors and Destructors</h3>
+<p><code>this[(parameters)] { .. }</code></p>
+<p><code>~this[(parameters)] { .. }</code></p>
+<p>Constructors are functions which are used to construct an instance of a type, they are to be called on a type as if the type itself were a function and must be declared with the following syntax:</p>
+<pre><code>this(...)
+{
+    ...
+}
+</code></pre>
+<p>Constructors may be called on existing data by use of <code>foo.ctor()</code> in which the overload is chosen by the arguments.</p>
+<p>Destructors are functions which are used to free an instance of a type, they will be automatically run when freeing or may be directly called using <code>delete foo</code> and must be declared with the following syntax:</p>
+<pre><code>~this(...)
+{
+    ...
+}
+</code></pre>
+<p><code>static</code> constructors and destructors will be executed the first time that a type is constructed or destructed, and never again.</p>
+<p>Neither constructors nor destructors are mandatory. All types will initially have a blank destructor as well as a default constructor which takes optional arguments for all fields.</p>
+<h3 id="unittest">Unittest</h3>
+<p><code>unittest [name] { .. }</code></p>
+<p>Unittests are used for executing test code under a unittest build. They function identically to functions besides being automatically run at once and having no return values.</p>
+<p>Names are not mandatory for unittests, but highly recommended for clarity.</p>
+<pre><code>unittest foo
+{
+   ...
+}
+</code></pre>
+<h2 id="fields-and-variables">Fields and Variables</h2>
+<p><code>[type] name</code></p>
+<p>A field, return value, or parameter are variables, but variables are not a field, return value, or parameter. This distinction is important.</p>
+<p>Use of <code>void</code> or a user-defined type with no members as the type of a field or variable should be treated as a comptime error, you may get around this through aliasing.</p>
+<p>All declarations are initialized with zero, this may be prevented by setting the initial value to <code>void</code>.</p>
+<h3 id="successive-declaration">Successive Declaration</h3>
+<p><code>, name..</code></p>
+<p>Variables of the same type may be successively defined by using <code>, name..</code>, this allows for tuple assignment to multiple variables.</p>
+<pre><code>// Variables a, b, and c are all defined as int.
+int a, b, c;
+
+// Variables d, e, and f are all defined as int and have the respective values 1, 2, and 3.
+int d, e, f = [1, 2, 3];
+</code></pre>
+<h3 id="bitfields">Bitfields</h3>
+<p><code>[type] name : [bits]</code></p>
+<p>Bitfields are identical to normal variables besides being constrained to a specified bit size. If a type with variables is constrained by a bitfield, all fields must be able to maintain the same ratio of bits as they initially had or it is a comptime error.</p>
+<p>Despite the deceiving name, bitfields may apply to any variable.</p>
+<pre><code>struct A
+{
+    // foo is constrained to 3 bits but acts like a normal field would.
+    T foo : 3;
+}
+</code></pre>
+<h2 id="attributes">Attributes</h2>
+<p><code>[attributes] [arregation] name..</code></p>
+<p><code>[attributes] [type] name..</code></p>
+<h5 id="function-exclusive">Function Exclusive</h5>
+<p><code>[attributes] [type] name.. [attributes]</code></p>
+<p>Attributes are special metadata which may be applied to certain things. They do not necessarily indicate special functionality but may be assigned such.</p>
+<p>Functions have their attributes <strong><em>after</em></strong> their signature, having attributes prepended the return type will result in the return type having such attributes applied to it.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Definition</th>
+<th>Applicable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>public</code></td>
+<td>Public accessibility, may be accessed anywhere.</td>
+<td>All</td>
+</tr>
+<tr>
+<td><code>private</code></td>
+<td>Private accessibility, may only be accessed by the same declaration it is a part of.</td>
+<td>All</td>
+</tr>
+<tr>
+<td><code>internal</code></td>
+<td>Internal accessibility, may only be accessed by the same package as it was declared.</td>
+<td>All</td>
+</tr>
+<tr>
+<td><code>partial</code></td>
+<td>May be distributed across several declarations of the given symbol, allows for splitting across multiple files.</td>
+<td>Types, Modules</td>
+</tr>
+<tr>
+<td><code>abstract</code></td>
+<td>Does not have an implementation but enforces that, if inherited, it must have an implementation. It is a comptime error to call an abstract function.</td>
+<td>Function</td>
+</tr>
+<tr>
+<td><code>pure</code></td>
+<td>Does not modify any state except its parent type (if it has any.)</td>
+<td>Function</td>
+</tr>
+<tr>
+<td><code>system</code></td>
+<td>Ignores all safety checks usually applied to functions and may not be called from a safe function, an unsafe function.</td>
+<td>Function</td>
+</tr>
+<tr>
+<td><code>trusted</code></td>
+<td>Ignores all safety checks usually applied to functions but may be called from a safe function, manual review.</td>
+<td>Function</td>
+</tr>
+<tr>
+<td><code>safe</code></td>
+<td>A safe function with all safety checks, may call <code>trusted</code> and <code>safe</code>.</td>
+<td>Function</td>
+</tr>
+<tr>
+<td><code>@tapped</code></td>
+<td>Ignores all attributes that may be inferred or applied to the parent scope(s).</td>
+<td>Function</td>
+</tr>
+<tr>
+<td><code>inline</code></td>
+<td>Guarantees that a function is inlined by the compiler or an error is thrown, variables with this will have their allocation inlined.</td>
+<td>Functions, Variables</td>
+</tr>
+<tr>
+<td><code>const</code></td>
+<td>Immutable, including by any direct references, does not indicate read-only memory.</td>
+<td>Variables, Types</td>
+</tr>
+<tr>
+<td><code>auto</code></td>
+<td>Infers type at comptime, similar to type aliasing but implicit.</td>
+<td>Variables</td>
+</tr>
+<tr>
+<td><code>ref</code></td>
+<td>Carries a reference to data.</td>
+<td>Parameters, Return Values</td>
+</tr>
+<tr>
+<td><code>mustuse</code></td>
+<td>Must be used or cast to <code>void</code> or an error is thrown.</td>
+<td>Return Values</td>
+</tr>
+<tr>
+<td><code>static</code></td>
+<td>Data is stored globally rather than by-instance.</td>
+<td>Variables</td>
+</tr>
+<tr>
+<td><code>atomic</code></td>
+<td>Makes data thread-safe through use of atomics.</td>
+<td>Variables</td>
+</tr>
+<tr>
+<td><code>@heap</code></td>
+<td>Allocate data on the heap, will result in voidability.</td>
+<td>Types, Variables</td>
+</tr>
+<tr>
+<td><code>@stack</code></td>
+<td>Allocate data on the stack.</td>
+<td>Types, Variables</td>
+</tr>
+<tr>
+<td><code>@scalar</code></td>
+<td>Allocate data in scalar registers.</td>
+<td>Types, Variables</td>
+</tr>
+<tr>
+<td><code>@floating</code></td>
+<td>Allocate data in float registers.</td>
+<td>Types, Variables</td>
+</tr>
+<tr>
+<td><code>@xmmword</code></td>
+<td>Allocate data in 128-bit vector registers.</td>
+<td>Types, Variables</td>
+</tr>
+<tr>
+<td><code>@ymmword</code></td>
+<td>Allocate data in 256-bit vector registers.</td>
+<td>Types, Variables</td>
+</tr>
+<tr>
+<td><code>@zmmword</code></td>
+<td>Allocate data in 512-bit vector registers.</td>
+<td>Types, Variables</td>
+</tr>
+<tr>
+<td><code>@align(n)</code></td>
+<td>Aligns data to the given boundary <code>n</code> which must be a power of 2 and supplied.</td>
+<td>Variables, Types</td>
+</tr>
+<tr>
+<td><code>@offset(n)</code></td>
+<td>Sets the offset of a field to a specific byte in its parent type, this may change the size of the type and can be used to create unions, <code>n</code> must be supplied.</td>
+<td>Fields</td>
+</tr>
+<tr>
+<td><code>@transient</code></td>
+<td>Prevents cache pollution by declaring a variable as non-temporal data.</td>
+<td>Variables, Types</td>
+</tr>
+<tr>
+<td><code>@unroll</code></td>
+<td>Hints to the compiler to unroll a loop.</td>
+<td>Statements</td>
+</tr>
+</tbody>
+</table>
+<p>Abstract functions must have their signature end in a semicolon without declaring a body.</p>
+<h3 id="voidable"><code>voidable</code></h3>
+<p><code>type[?] name</code></p>
+<p>Any variable may be <code>voidable</code> by appending <code>?</code> to the end of the provided type. Declaring a variable as such will result in it being able to evaluate to <code>void</code>, this is indicates that no value has been assigned to it and is fundamentally different from being zeroed, as it exists as a separate state.</p>
+<h3 id="user-defined-attributes">User-defined Attributes</h3>
+<p><code>[@][symbol] [aggregation] name..</code></p>
+<p><code>[@][symbol] [type] name..</code></p>
+<p>User-defined attributes may be created by simply prepending <code>@</code> before a symbol.</p>
+<h2 id="symbols-and-aliases">Symbols and Aliases</h2>
+<p>A symbol is any literal, statement, or otherwise declaration.</p>
+<p>Aliases are defined with <code>alias</code> or <code>alias[]</code> (for an array of aliases) to arbitrarily refer to any symbol or value. You may not write to an alias at runtime, as they are evaluated during compilation, but reassignment to an alias at comptime is legal.</p>
+<p>Aliases may be instance data if assigned to a variable and are able to be used in replacement of any symbol anywhere in code.</p>
+<pre><code>alias foo = 1;
+
+// This function will be evaluated at comptime
+void bar() pure
+{
+    // foo now contains a direct alias to bar, this allows us to use foo like it is that symbol.
+    foo = bar;
+
+    // foo now contains a direct alias to int.
+    foo = int;
+
+    // Declared a variable with the type of int because it's the symbol stored in foo.
+    foo a = 2;
+}
+</code></pre>
+<h3 id="generics">Generics</h3>
+<p><code>name[(parameters)]</code></p>
+<p>Parameters must be typed as they are normally typed, however, aliases to arbitrary symbols must have the format <code>alias name</code> and type symbols may have the format <code>name</code> where neither <code>alias</code> nor a type is declared.</p>
+<p><code>!([arguments])</code></p>
+<p><code>![argument]</code></p>
+<p>Types and functions may declare generic arguments, these are added as an additional set of parameters inside of parenthesis, and must always evaluate to aliases which makes them comptime exclusive and allow for specialized code-generation.</p>
+<pre><code>// T acts as an alias to a type.
+T foo(T)(T a)
+{
+    return a;
+}
+
+foo!int(1);
+// or foo!(int)(1);
+</code></pre>
+<h3 id="mixins">Mixins</h3>
+<p>TBD</p>
+<h2 id="statements">Statements</h2>
+<p><code>statement [(arguments)]</code> (varies)</p>
+<p>Statements are declarations which have special executive functionality, Fern defines the following statements:</p>
+<table>
+<thead>
+<tr>
+<th>Statement</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>if</code></td>
+<td>Conditionally executes the next line or scope.</td>
+</tr>
+<tr>
+<td><code>else</code></td>
+<td>Alternate of <code>if</code> in which the next line or scope will be executed if an <code>if</code> was present prior and failed</td>
+</tr>
+<tr>
+<td><code>foreach</code></td>
+<td>Iterates the next line or scope over a range of values, this may be a data range or integral range by use of <code>L..U</code> where <code>L</code> is the lower bound and <code>U</code> is the upper bound</td>
+</tr>
+<tr>
+<td><code>foreach_reverse</code></td>
+<td>Identical to <code>foreach</code> but operates in reverse.</td>
+</tr>
+<tr>
+<td><code>while</code></td>
+<td>Iterates the next line or scope while a condition is true.</td>
+</tr>
+<tr>
+<td><code>goto</code></td>
+<td>Jumps to a <code>label</code> within code, this is declared as <code>goto name</code></td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td>Labels a part of code to be jumped to by a <code>goto</code> statement, this is declared as <code>name:</code>.</td>
+</tr>
+<tr>
+<td><code>with</code></td>
+<td>Used to declare a scope in which all function calls are first evaluated as members of a variable.</td>
+</tr>
+<tr>
+<td><code>break</code></td>
+<td>Exits the current scope.</td>
+</tr>
+<tr>
+<td><code>continue</code></td>
+<td>Continues to the next iteration in a loop.</td>
+</tr>
+</tbody>
+</table>
+<p>Statements are not guaranteed to be evaluated at runtime, and may be evaluated at comptime if possible. This behavior may be modified with special compiler attributes.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../metaprogramming/" class="btn btn-neutral float-right" title="Metaprogramming">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Copyright &copy; Fern Developers - 2024
+ <br>   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation.
+A copy of the license is included in the section entitled "Copyleft".
+</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../metaprogramming/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Fern developers">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>FNC - Fern Specification</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="https://raw.githubusercontent.com/fern-pl/specification/main/.github/custom.cs" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "FNC";
+    var mkdocs_page_input_path = "fnc.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Fern Specification</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="..">Home</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../grammar/">Grammar</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../metaprogramming/">Metaprogramming</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../model/">Model</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../LICENSE/">Copyleft</a>
+  </li>
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Fern Specification</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>FNC</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/fern-pl/specification/edit/main/specification/fnc.md"> Edit on fern-pl/specification</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="fnc">FNC</h1>
+<h2 id="strings-vectorization">Strings &amp; Vectorization</h2>
+<p>FNC uses heap-last vector-first schema for strings. Strings do not have the same priority as vector types, like a <code>long[2]</code> but retains second priority at all times to try to fit them into registers. </p>
+<p>If a string overflows outside of a vector, it will go onto the heap instead, where it will act as a rope which allocates ahead of itself to account for repeated reassignment at the cost of using extra memory.</p>
+<p>Vectors are not explicitly defined as types, but all static arrays that directly correspond to a vector type will act as a vector type implicitly, these are defined as the following types.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Intel Intrinsics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>byte[16]</code></td>
+<td><code>__m128i</code></td>
+</tr>
+<tr>
+<td><code>ubyte[16]</code></td>
+<td><code>__m128i</code></td>
+</tr>
+<tr>
+<td><code>short[8]</code></td>
+<td><code>__m128i</code></td>
+</tr>
+<tr>
+<td><code>ushort[8]</code></td>
+<td><code>__m128i</code></td>
+</tr>
+<tr>
+<td><code>int[4]</code></td>
+<td><code>__m128i</code></td>
+</tr>
+<tr>
+<td><code>uint[4]</code></td>
+<td><code>__m128i</code></td>
+</tr>
+<tr>
+<td><code>long[2]</code></td>
+<td><code>__m128i</code></td>
+</tr>
+<tr>
+<td><code>ulong[2]</code></td>
+<td><code>__m128i</code></td>
+</tr>
+<tr>
+<td><code>float[4]</code></td>
+<td><code>__m128</code></td>
+</tr>
+<tr>
+<td><code>double[2]</code></td>
+<td><code>__m128d</code></td>
+</tr>
+<tr>
+<td><code>byte[32]</code></td>
+<td><code>__m256i</code></td>
+</tr>
+<tr>
+<td><code>ubyte[32]</code></td>
+<td><code>__m256i</code></td>
+</tr>
+<tr>
+<td><code>short[16]</code></td>
+<td><code>__m256i</code></td>
+</tr>
+<tr>
+<td><code>ushort[16]</code></td>
+<td><code>__m256i</code></td>
+</tr>
+<tr>
+<td><code>int[8]</code></td>
+<td><code>__m256i</code></td>
+</tr>
+<tr>
+<td><code>uint[8]</code></td>
+<td><code>__m256i</code></td>
+</tr>
+<tr>
+<td><code>long[4]</code></td>
+<td><code>__m256i</code></td>
+</tr>
+<tr>
+<td><code>ulong[4]</code></td>
+<td><code>__m256i</code></td>
+</tr>
+<tr>
+<td><code>float[8]</code></td>
+<td><code>__m256</code></td>
+</tr>
+<tr>
+<td><code>double[4]</code></td>
+<td><code>__m256d</code></td>
+</tr>
+<tr>
+<td><code>byte[64]</code></td>
+<td><code>__m512i</code></td>
+</tr>
+<tr>
+<td><code>ubyte[64]</code></td>
+<td><code>__m512i</code></td>
+</tr>
+<tr>
+<td><code>short[32]</code></td>
+<td><code>__m512i</code></td>
+</tr>
+<tr>
+<td><code>ushort[32]</code></td>
+<td><code>__m512i</code></td>
+</tr>
+<tr>
+<td><code>int[16]</code></td>
+<td><code>__m512i</code></td>
+</tr>
+<tr>
+<td><code>uint[16]</code></td>
+<td><code>__m512i</code></td>
+</tr>
+<tr>
+<td><code>long[8]</code></td>
+<td><code>__m512i</code></td>
+</tr>
+<tr>
+<td><code>ulong[8]</code></td>
+<td><code>__m512i</code></td>
+</tr>
+<tr>
+<td><code>float[16]</code></td>
+<td><code>__m512</code></td>
+</tr>
+<tr>
+<td><code>double[8]</code></td>
+<td><code>__m512d</code></td>
+</tr>
+</tbody>
+</table>
+<p>The following intrinsics are defined for such vector types:</p>
+<p>TODO: TBD</p>
+<h2 id="phases">Phases</h2>
+<blockquote>
+<p>The Arbore project tree is read before anything else and <code>arbore.json</code> is used to determine compilation information, if it exists, which is highly recommended to allow for caching of metadata which aids in compilation speeds.</p>
+</blockquote>
+<ol>
+<li>Lexical Analysis<ul>
+<li>Source code is split up into tokens and initially parsed.</li>
+</ul>
+</li>
+<li>Syntax Analysis<ul>
+<li>Tokens are parsed to make usable input for the compiler, during this phase comptime errors for basic syntax are thrown. </li>
+<li>Function call inference is done during this phase, determining special syntax such as implicit generics instantiation, UFCS function extensions, etc.</li>
+</ul>
+</li>
+<li>Semantic Analysis<ul>
+<li>Input code is made to actually usable code, symbols are resolved, tables are set up, functions are generated, and inference is done. This may take place numerous times.</li>
+<li>Inference will be done by the compiler back-end during this phase, determining function attributes that were not implicitly declared and throwing comptime errors that were not previously caught.</li>
+</ul>
+</li>
+<li>Evaluation &amp; Resolution<ul>
+<li>Symbols which may not be resolved without a prior step, such as executing comptime functions or otherwise mixing in code is done, if this results in a symbol being evaluated then semantic analysis will take place again to resolve whatever was done by this step.</li>
+</ul>
+</li>
+<li>Pollution, Scoring &amp; Initialization<ul>
+<li>Function instructions are traversed to determine hierarchy of pollution, scoring variables based on frequency, and initialization of variables are added if they are not already initialized.</li>
+<li>Vector types are always maximally scored, meaning they have guaranteed priority to their registers over other non-vector types.</li>
+</ul>
+</li>
+<li>Optimization I<ul>
+<li>Instructions which may be evaluated at comptime are automatically evaluated and their results are inlined. This will result in expressions like <code>if (true)</code> or <code>1 + 2</code> to evaluate to no branch and <code>3</code> respectively.</li>
+<li>Inefficient operations, such as <code>mov rax, 0</code> would be replaced with their more effective counterparts, like <code>xor rax, rax</code> and inference of intentions and implications are done for later passes.</li>
+</ul>
+</li>
+<li>Optimization II</li>
+<li>Optimization III</li>
+<li>Optimization IV</li>
+<li>Optimization V</li>
+<li>Linear Reference Counting<ul>
+<li>Variables are linearly reference counted, this is done by traversing the instructions of functions in the current hierarchy and checking when the variable is last accessed, it is collected after the last time it has been accessed or not collected if it either exits all scopes in the hierarchy or is unable to be confidently determined to be collectable.</li>
+<li>A variable would not be collected if it is used in a call to an external function with unavailable source, assigned to a global field, assigned to an external object's data, or otherwise leaves the scope in a way where it cannot be tracked; this would lead to the garbage collector handling the object rather than the reference counter.</li>
+</ul>
+</li>
+<li>Compilation<ul>
+<li>After all functions have been resolved types are set up, functions are compiled, data is inlined to the object, and the final compiled object is prepared to be linked in the next phase.</li>
+</ul>
+</li>
+<li>Linking<ul>
+<li>The compiled object is linked, producing the actual binary.</li>
+</ul>
+</li>
+<li>Caching<ul>
+<li>Comptime information that was previously evaluated in the Evaluation &amp; Resolution stage are cached to better streamline the build process in the future. This is only done if the compilation took place in an Arbore project.</li>
+</ul>
+</li>
+</ol>
+<h2 id="arbore">Arbore</h2>
+<p>Arbore is the standardized Fern build system intended to be an cross-compiler system to allow any compiler to easily cache metadata and understand your project at a glance.</p>
+<h3 id="structure">Structure</h3>
+<ul>
+<li><code>bin\</code></li>
+<li><code>source\</code></li>
+<li><code>arbore-selections.json</code></li>
+<li><code>arbore.json</code></li>
+</ul>
+<p><code>bin\</code> holds all recent compilations and cached metadata, namely comptime information used to speed up future builds and recent binaries.</p>
+<p><code>source\</code> holds all source files used for compilation, this may be modified to not be used or for other folders to also contain source files using <code>arb.json</code>. Internal folders inside of a source folder are ignored by compilation and have no bearing on output.</p>
+<p><code>arbore-selections.json</code> is reserved and not explicitly required. It is intended to eventually be used for adding library dependencies.</p>
+<p><code>arbore.json</code> is the core of Arbore, all contents are reserved.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Copyright &copy; Fern Developers - 2024
+ <br>   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation.
+A copy of the license is included in the section entitled "Copyleft".
+</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

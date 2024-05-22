@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Fern developers">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Metaprogramming - Fern Specification</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="https://raw.githubusercontent.com/fern-pl/specification/main/.github/custom.cs" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Metaprogramming";
+    var mkdocs_page_input_path = "metaprogramming.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Fern Specification</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="..">Home</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../grammar/">Grammar</a>
+  </li>
+    
+      
+
+
+  
+    
+    <li class="navtree toctree-l1 page current">
+      <a class="current" href="./">
+        Metaprogramming
+      </a>
+    </li>
+    
+      
+
+
+
+  <li class="toctree-l1 current">
+    <ul class="subnav-l1 current">
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#symbol-properties">Symbol Properties</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#symbol-attributes-formats">Symbol Attributes &amp; Formats</a>
+        </li>
+    
+    </ul>
+  </li>
+
+
+  
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../model/">Model</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../LICENSE/">Copyleft</a>
+  </li>
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Fern Specification</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Metaprogramming</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/fern-pl/specification/edit/main/specification/metaprogramming.md"> Edit on fern-pl/specification</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="metaprogramming">Metaprogramming</h1>
+<blockquote>
+<p>Locals are commonly referred to as variables, which in Fern are specifically variables that are local to a function (ie: not a field or parameter variable. )</p>
+</blockquote>
+<p>All symbol structure members may be accessed from any symbol using the <code>-&gt;</code> operator, to see such structures view the section on symbol formats!</p>
+<p><code>rt.symbol</code> may be used to access internal symbol structures, but not to directly access full symbol structures at once.</p>
+<pre><code>auto foo = 1;
+string bar = &quot;abc&quot;;
+
+void main()
+{
+    writeln(foo-&gt;size); // 4
+    writeln(foo-&gt;type-&gt;identifier); // int
+    writeln(foo-&gt;type-&gt;name); // int
+
+    writeln(foo-&gt;size == bar-&gt;size); // false
+    writeln(bar.length); // 3
+    writeln(bar-&gt;type == string); // true
+    writeln(bar-&gt;glob == foo-&gt;glob); // true
+}
+</code></pre>
+<h2 id="symbol-properties">Symbol Properties</h2>
+<p>Fern has an assortment of utility functions defined for symbols automatically to make working with them more fluid, they may also be defined specially to be used with the <code>-&gt;</code> operator if a comptime available function returns <code>alias</code> and takes in an <code>alias</code> as the first generic parameter.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Evaluates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isType</code></td>
+<td>Is this symbol a type?</td>
+</tr>
+<tr>
+<td><code>isClass</code></td>
+<td>Is this symbol a class?</td>
+</tr>
+<tr>
+<td><code>isStruct</code></td>
+<td>Is this symbol a struct?</td>
+</tr>
+<tr>
+<td><code>isTagged</code></td>
+<td>Is this symbol a tagged?</td>
+</tr>
+<tr>
+<td><code>isTuple</code></td>
+<td>Is this symbol a tuple?</td>
+</tr>
+<tr>
+<td><code>isModule</code></td>
+<td>Is this symbol a module?</td>
+</tr>
+<tr>
+<td><code>isGlob</code></td>
+<td>Is this symbol a glob?</td>
+</tr>
+<tr>
+<td><code>isAlias</code></td>
+<td>Is this symbol an alias?</td>
+</tr>
+<tr>
+<td><code>isAliasSeq</code></td>
+<td>Is this symbol an alias sequence? <code>isAlias &amp;&amp; isArray</code></td>
+</tr>
+<tr>
+<td><code>isFunction</code></td>
+<td>Is this symbol a function?</td>
+</tr>
+<tr>
+<td><code>isDelegate</code></td>
+<td>Is this symbol a delegate?</td>
+</tr>
+<tr>
+<td><code>isLambda</code></td>
+<td>Is this symbol a lambda?</td>
+</tr>
+<tr>
+<td><code>isCtor</code></td>
+<td>Is this symbol a constructor?</td>
+</tr>
+<tr>
+<td><code>isDtor</code></td>
+<td>Is this symbol a destructor?</td>
+</tr>
+<tr>
+<td><code>isSCtor</code></td>
+<td>Is this symbol a static constructor?</td>
+</tr>
+<tr>
+<td><code>isSDtor</code></td>
+<td>Is this symbol a static destructor?</td>
+</tr>
+<tr>
+<td><code>isUnittest</code></td>
+<td>Is this symbol a unittest?</td>
+</tr>
+<tr>
+<td><code>isField</code></td>
+<td>Is this symbol a field?</td>
+</tr>
+<tr>
+<td><code>isLocal</code></td>
+<td>Is this symbol a local?</td>
+</tr>
+<tr>
+<td><code>isParameter</code></td>
+<td>Is this symbol a parameter?</td>
+</tr>
+<tr>
+<td><code>isVariable</code></td>
+<td>Is this symbol a variable? <code>isField \|\| isLocal \|\| isParameter</code></td>
+</tr>
+<tr>
+<td><code>isExpression</code></td>
+<td>Is this symbol an expression?</td>
+</tr>
+<tr>
+<td><code>isLiteral</code></td>
+<td>Is this symbol a literal?</td>
+</tr>
+<tr>
+<td><code>isArray</code></td>
+<td>Is this symbol an array?</td>
+</tr>
+<tr>
+<td><code>isDynamicArray</code></td>
+<td>Is this symbol a dynamic array?</td>
+</tr>
+<tr>
+<td><code>isStaticArray</code></td>
+<td>Is this symbol a static array?</td>
+</tr>
+<tr>
+<td><code>isAssociativeArray</code></td>
+<td>Is this symbol an associative array?</td>
+</tr>
+<tr>
+<td><code>isString</code></td>
+<td>Is this symbol a string?</td>
+</tr>
+<tr>
+<td><code>isWideString</code></td>
+<td>Is this symbol a wide string? <code>dstring</code> or <code>wstring</code></td>
+</tr>
+<tr>
+<td><code>isSigned</code></td>
+<td>Is this symbol of a signed type?</td>
+</tr>
+<tr>
+<td><code>isIntegral</code></td>
+<td>Is this symbol an integral?</td>
+</tr>
+<tr>
+<td><code>isFloating</code></td>
+<td>Is this symbol a floating-point?</td>
+</tr>
+<tr>
+<td><code>isNumeric</code></td>
+<td>Is this symbol an integral or floating-point?</td>
+</tr>
+<tr>
+<td><code>isByRef</code></td>
+<td>Is this symbol passed by reference? <code>isRef \|\| isClass \|\| isKHeap</code></td>
+</tr>
+<tr>
+<td><code>isVector</code></td>
+<td>Is this symbol a vector? <code>isKXMM \|\| isKYMM \|\| isKZMM</code></td>
+</tr>
+<tr>
+<td><code>isPublic</code></td>
+<td>Is this symbol publicly visible?</td>
+</tr>
+<tr>
+<td><code>isPrivate</code></td>
+<td>Is this symbol privately visible?</td>
+</tr>
+<tr>
+<td><code>isInternal</code></td>
+<td>Is this symbol internally visible?</td>
+</tr>
+<tr>
+<td><code>isSafe</code></td>
+<td>Is this symbol safe?</td>
+</tr>
+<tr>
+<td><code>isSystem</code></td>
+<td>Is this symbol system?</td>
+</tr>
+<tr>
+<td><code>isTrusted</code></td>
+<td>Is this symbol trusted?</td>
+</tr>
+<tr>
+<td><code>isStatic</code></td>
+<td>Is this symbol static?</td>
+</tr>
+<tr>
+<td><code>isGlobal</code></td>
+<td>Is this symbol global?</td>
+</tr>
+<tr>
+<td><code>isTransient</code></td>
+<td>Is this symbol transient?</td>
+</tr>
+<tr>
+<td><code>isAtomic</code></td>
+<td>Is this symbol atomic?</td>
+</tr>
+<tr>
+<td><code>isBitfield</code></td>
+<td>Is this symbol a bitfield? This alters the size field of symbols, and thus will result in it being in bits.</td>
+</tr>
+<tr>
+<td><code>isPure</code></td>
+<td>Is this symbol pure?</td>
+</tr>
+<tr>
+<td><code>isConst</code></td>
+<td>Is this symbol const?</td>
+</tr>
+<tr>
+<td><code>isRef</code></td>
+<td>Is this symbol ref?</td>
+</tr>
+<tr>
+<td><code>isKHeap</code></td>
+<td>Is this symbol a heap kind?</td>
+</tr>
+<tr>
+<td><code>isKStack</code></td>
+<td>Is this symbol a stack kind?</td>
+</tr>
+<tr>
+<td><code>isKScalar</code></td>
+<td>Is this symbol a scalar kind?</td>
+</tr>
+<tr>
+<td><code>isKFloat</code></td>
+<td>Is this symbol a floating-point kind?</td>
+</tr>
+<tr>
+<td><code>isKXMM</code></td>
+<td>Is this symbol a 128-bit vector kind?</td>
+</tr>
+<tr>
+<td><code>isKYMM</code></td>
+<td>Is this symbol a 256-bit vector kind?</td>
+</tr>
+<tr>
+<td><code>isKZMM</code></td>
+<td>Is this symbol a 512-bit vector kind?</td>
+</tr>
+<tr>
+<td><code>isKReadOnly</code></td>
+<td>Is this symbol a readonly kind? This may, but won't always, happen with <code>const</code> symbols.</td>
+</tr>
+<tr>
+<td><code>isKDefault</code></td>
+<td>Is this symbol of the default kind? Does not indicate that this was set to default!</td>
+</tr>
+<tr>
+<td><code>isNested</code></td>
+<td>Is this symbol nested in one or more other non-module symbols?</td>
+</tr>
+<tr>
+<td><code>isPrimitive</code></td>
+<td>Is this symbol a primitive type? <code>!isAggregate &amp;&amp; !isArray</code></td>
+</tr>
+<tr>
+<td><code>isBuiltin</code></td>
+<td>Is this symbol not an aggregate?</td>
+</tr>
+<tr>
+<td><code>hasDepth</code></td>
+<td>Does this symbol have any depth? Pointers and arrays.</td>
+</tr>
+<tr>
+<td><code>hasBody</code></td>
+<td>Is this symbol a function with instructions?</td>
+</tr>
+<tr>
+<td><code>hasDataAllocations</code></td>
+<td>Does this symbol have any variables contained within it?</td>
+</tr>
+<tr>
+<td><code>isEnum</code></td>
+<td>Is this symbol an enum? All members must be <code>const</code> and the type must be a <code>tagged</code>.</td>
+</tr>
+<tr>
+<td><code>getOverloads(string)</code></td>
+<td>Get all overloads of the given function by name in this symbol.</td>
+</tr>
+<tr>
+<td><code>getChild(string)</code></td>
+<td>Gets the child of this symbol with the given name.</td>
+</tr>
+<tr>
+<td><code>getParent(string)</code></td>
+<td>Gets the parent of this symbol with the given name.</td>
+</tr>
+<tr>
+<td><code>getAttribute(string)</code></td>
+<td>Gets the attribute of this symbol with the given name.</td>
+</tr>
+<tr>
+<td><code>getField(string)</code></td>
+<td>Gets the field of this symbol with the given name.</td>
+</tr>
+<tr>
+<td><code>getFunction(string)</code></td>
+<td>Gets the function of this symbol with the given name.</td>
+</tr>
+<tr>
+<td><code>getInherit(string)</code></td>
+<td>Gets the inherit of this symbol with the given name.</td>
+</tr>
+<tr>
+<td><code>getAlias(string)</code></td>
+<td>Gets the child alias of this symbol with the given name.</td>
+</tr>
+<tr>
+<td><code>hasChild(string)</code></td>
+<td>Does this symbol have a child with the given name?</td>
+</tr>
+<tr>
+<td><code>hasParent(string)</code></td>
+<td>Does this symbol have a parent with the given name?</td>
+</tr>
+<tr>
+<td><code>hasAttribute(string)</code></td>
+<td>Does this symbol have an attribute with the given name?</td>
+</tr>
+<tr>
+<td><code>hasField(string)</code></td>
+<td>Does this symbol have a field with the given name?</td>
+</tr>
+<tr>
+<td><code>hasFunction(string)</code></td>
+<td>Does this symbol have a function with the given name?</td>
+</tr>
+<tr>
+<td><code>hasInherit(string)</code></td>
+<td>Does this symbol have an inherit with the given name?</td>
+</tr>
+<tr>
+<td><code>hasAlias(string)</code></td>
+<td>Does this symbol have a child alias with the given name?</td>
+</tr>
+<tr>
+<td><code>hasChild(Symbol)</code></td>
+<td>Is the given symbol a child of this symbol?</td>
+</tr>
+<tr>
+<td><code>hasParent(Symbol)</code></td>
+<td>Is the given symbol a parent of this symbol?</td>
+</tr>
+<tr>
+<td><code>hasAttribute(Symbol)</code></td>
+<td>Is the given symbol an attribute of this symbol?</td>
+</tr>
+<tr>
+<td><code>hasField(Symbol)</code></td>
+<td>Is the given symbol a field of this symbol?</td>
+</tr>
+<tr>
+<td><code>hasFunction(Symbol)</code></td>
+<td>Is the given symbol a function of this symbol?</td>
+</tr>
+<tr>
+<td><code>hasInherit(Symbol)</code></td>
+<td>Does this symbol inherit the given symbol?</td>
+</tr>
+<tr>
+<td><code>hasAlias(Symbol)</code></td>
+<td>Is the given symbol an alias child of this symbol?</td>
+</tr>
+</tbody>
+</table>
+<h2 id="symbol-attributes-formats">Symbol Attributes &amp; Formats</h2>
+<table>
+<thead>
+<tr>
+<th>Symbol Attribute</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type</code></td>
+<td>Structure of data with or without instance presence - <code>struct</code>, <code>class</code>, <code>tagged</code> or <code>tuple</code>.</td>
+</tr>
+<tr>
+<td><code>struct</code></td>
+<td>A product-type aggregate passed by-value.</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>A product-type aggregate passed by-reference.</td>
+</tr>
+<tr>
+<td><code>tagged</code></td>
+<td>A sum-type aggregate passed by-value with a <code>tag</code>.</td>
+</tr>
+<tr>
+<td><code>tuple</code></td>
+<td>A sum-type aggregate passed by-value with arbitrary types.</td>
+</tr>
+<tr>
+<td><code>module</code></td>
+<td>Top or domain level scope with no instance presence.</td>
+</tr>
+<tr>
+<td><code>function</code></td>
+<td>Executable code scope taking parameters and returning a return type.</td>
+</tr>
+<tr>
+<td><code>delegate</code></td>
+<td>Dynamic executable code scope taking parameters and returning a return type from an address.</td>
+</tr>
+<tr>
+<td><code>lambda</code></td>
+<td>Special inline format of <code>delegate</code>.</td>
+</tr>
+<tr>
+<td><code>ctor</code></td>
+<td>Scope constructor, namely used for <code>type</code> and <code>module</code>.</td>
+</tr>
+<tr>
+<td><code>dtor</code></td>
+<td>Scope destructor, namely used for <code>type</code> and <code>module</code>.</td>
+</tr>
+<tr>
+<td><code>unittest</code></td>
+<td>Scope independent executable code taking no parameters and not returning anything. Executes synchronously and may not be called.</td>
+</tr>
+<tr>
+<td><code>field</code></td>
+<td>Data that exists and persists outside of an execution scope.</td>
+</tr>
+<tr>
+<td><code>local</code></td>
+<td>Data that exists and persists only inside of an execution scope.</td>
+</tr>
+<tr>
+<td><code>parameter</code></td>
+<td>Local declarations in a function signature which require arguments.</td>
+</tr>
+<tr>
+<td><code>expression</code></td>
+<td>Code which may not function without an existing statement to modify, like <code>1 + 1</code></td>
+</tr>
+<tr>
+<td><code>literal</code></td>
+<td>Value known to the compiler before execution.</td>
+</tr>
+<tr>
+<td><code>glob</code></td>
+<td>The global scope of the entire program, containing all of its symbols.</td>
+</tr>
+<tr>
+<td><code>alias</code></td>
+<td>A symbol pointing to another symbol.</td>
+</tr>
+</tbody>
+</table>
+<p>This is implementation defined, but generally symbols have or store the same information as the following formats internally:</p>
+<pre><code>Symbol [ 
+    Glob glob;
+    SymAttr symattr;
+    string name;
+    Symbol[] parents;
+    Symbol[] children;
+    Symbol[string] attributes;
+
+    string identifier;
+    Symbol parent;
+    # May not be accessed on primitive types, as there is no module available.
+    Module module;
+]
+</code></pre>
+<pre><code>Type : Symbol [
+    Type[string] inherits;
+    Variable[] fields;
+    Function[] functions;
+    ubyte[] data;
+    size_t size;
+    size_t align;
+    # For pointer and arrays, how deeply nested they are.
+    uint depth;
+
+    string type;
+]
+</code></pre>
+<pre><code># This is also used for delegates, lambdas, ctors, dtors, and unittests.
+Function : Symbol [
+    Variable[] parameters;
+    # This will include the return and parameters as the first locals.
+    Variable[string] locals;
+    size_t align;
+
+    Symbol return;
+    string type;
+]
+</code></pre>
+<pre><code># This is also used for locals, parameters, expressions, and literals.
+Variable : Symbol [
+    Type type;
+    ubyte[] data;
+    size_t size;
+    size_t align;
+    size_t offset;
+]
+</code></pre>
+<pre><code>Alias : Symbol [
+    union
+    {
+        Symbol single;
+        Symbol[] many;
+    }
+
+    // Always &quot;alias&quot;
+    string type;
+]
+</code></pre>
+<pre><code>Module : Symbol [
+    Symbol[] imports;
+    Type[] types;
+    Variable[] fields;
+    Function[] functions;
+]
+</code></pre>
+<pre><code># This is used to store global information about the program.
+Glob : Symbol [
+    Symbol[string] symbols;
+    Module[string] modules;
+    Type[string] types;
+    Field[string] fields;
+    Function[string] functions;
+    Alias[string] aliases;
+    Function[] unittests;
+]
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../model/" class="btn btn-neutral float-right" title="Model">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../grammar/" class="btn btn-neutral" title="Grammar"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Copyright &copy; Fern Developers - 2024
+ <br>   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation.
+A copy of the license is included in the section entitled "Copyleft".
+</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../grammar/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../model/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
