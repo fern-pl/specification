@@ -37,6 +37,7 @@ Literal suffixes are suffixes which may be appended to a literal to change the w
 | `f` | 32-bit floating point, suffix. |
 | `0x` | Hexadecimal, prefix. |
 | `0X` | Hexadecimal, prefix. |
+| `0o` | Octal, prefix. |
 | `0b` | Binary, prefix. |
 
 All integer literals may have their values separated by underscores for clarity, in replacement of commas such as in `10_000` where the literal is the value 10 thousand.
